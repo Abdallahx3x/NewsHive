@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "NewsHive"
 include(":app")
 include(":ui")
+include(":viewModel")
