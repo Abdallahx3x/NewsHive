@@ -15,10 +15,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "NewsHive"
 include(":app")
-include(":ui")
-include(":viewModel")
-include(":useCases")
-include(":entities")
-include(":repositories")
-include(":remote")
-include(":local")
+include(":data:local")
+include(":data:remote")
+include(":data:repositories")
+include(":presentation:ui")
+include(":presentation:viewModel")
+include(":domain:useCases")
+include(":domain:entities")
