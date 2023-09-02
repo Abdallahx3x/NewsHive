@@ -36,10 +36,7 @@ dependencies {
     implementation(project(Modules.DATA_REPOSITORIES))
 
     implementation(Dependencies.androidxCore)
-    implementation(Dependencies.androidxAppcompat)
-    implementation(Dependencies.androidMaterial)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
-    androidTestImplementation(Dependencies.espresso)
 
 }

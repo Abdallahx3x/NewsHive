@@ -9,4 +9,7 @@ java {
 }
 dependencies{
     api(project(Modules.DOMAIN_ENTITIES))
+    implementation (Dependencies.coroutines)
+    implementation(Dependencies.dagger)
+
 }

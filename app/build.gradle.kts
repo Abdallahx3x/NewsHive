@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -33,6 +36,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -40,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion ="1.4.3"
     }
     packaging {
         resources {
@@ -68,12 +72,27 @@ dependencies {
     implementation(Dependencies.composeUiGraphics)
     implementation(Dependencies.composeUiPreviewTool)
     implementation(Dependencies.composeMaterial3)
+    implementation(Dependencies.retrofit)
+    implementation (Dependencies.gsonConverter)
+    implementation (Dependencies.hilt)
+//    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+   // implementation(platform("com..okhttp3:okhttp-bom:4.10.0"))
+
+
+    kapt(Dependencies.hiltCompiler)
+    implementation (Dependencies.logging)
+
+
+
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
-    androidTestImplementation(Dependencies.espresso)
     androidTestImplementation(platform(Dependencies.composeBom))
     androidTestImplementation(Dependencies.composeJunit)
     debugImplementation(Dependencies.composeUiTooling)
     debugImplementation(Dependencies.composeTestManifest)
+    debugImplementation(Dependencies.composeTestManifest)
+
+
 
 }

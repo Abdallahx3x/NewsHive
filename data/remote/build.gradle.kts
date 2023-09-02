@@ -36,12 +36,17 @@ dependencies {
 
 
     implementation(project(Modules.DATA_REPOSITORIES))
+    implementation(project(Modules.DOMAIN_USE_CASES))
+
 
 
     implementation(Dependencies.androidxCore)
-    implementation(Dependencies.androidxAppcompat)
-    implementation(Dependencies.androidMaterial)
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.gsonConverter)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
-    androidTestImplementation(Dependencies.espresso)
+    androidTestImplementation(Dependencies.gsonConverter)
+    implementation (Dependencies.hilt)
+
+
 }

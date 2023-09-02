@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
+
 }
 
 android {
@@ -30,6 +32,9 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -39,11 +44,16 @@ dependencies {
 
 
     implementation(Dependencies.androidxCore)
-    implementation(Dependencies.androidxAppcompat)
-    implementation(Dependencies.androidMaterial)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
-    androidTestImplementation(Dependencies.espresso)
+    implementation (Dependencies.hilt)
+    implementation(Dependencies.coroutines)
+    implementation(Dependencies.lifecycleViewModel)
+    kapt (Dependencies.hiltCompiler)
+
+
+
+
 
 
 }

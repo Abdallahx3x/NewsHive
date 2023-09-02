@@ -38,9 +38,9 @@ dependencies {
     implementation(project(Modules.DOMAIN_USE_CASES))
 
     implementation(Dependencies.androidxCore)
-    implementation(Dependencies.androidxAppcompat)
-    implementation(Dependencies.androidMaterial)
+    implementation (Dependencies.hilt)
+    implementation(Dependencies.gsonConverter)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
-    androidTestImplementation(Dependencies.espresso)
+
 }
