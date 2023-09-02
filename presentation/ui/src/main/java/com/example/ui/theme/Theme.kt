@@ -1,4 +1,4 @@
-package com.example.newshive.ui.theme
+package com.example.ui.theme
 
 import android.app.Activity
 import android.os.Build
