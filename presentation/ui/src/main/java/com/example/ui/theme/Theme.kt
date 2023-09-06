@@ -1,5 +1,6 @@
 package com.example.ui.theme
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,33 +10,71 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = LightPrimary,
+    tertiary = Pink80,
+    background = OnDarkBackground
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = LightPrimary,
+    tertiary = Pink40,
+    background = OnLightBackground
 )
+
+val onLightCustomColorsPalette = CustomColorsPalette(
+    primary = LightPrimary,
+    border = LightBorder,
+    card = LightCard,
+    statusBar = LightStatusBar,
+    background = LightBackground,
+    onBackground87 = OnLightBackground87,
+    onBackground60 = OnLightBackground60,
+    onBackground38 = OnLightBackground38,
+    gray = Gray,
+    lightGray = LightGray,
+    darkGray = DarkGray,
+    yellow = Yellow,
+    green = Green,
+    orange = Orange,
+    mauve = Mauve,
+    white = White,
+    black = Black,
+    red60 = LightRed60,
+    red = LightRed
+)
+
+val onDarkCustomColorsPalette = CustomColorsPalette(
+    primary = DarkPrimary,
+    border = DarkBorder,
+    card = DarkCard,
+    statusBar = DarkStatusBar,
+    background = DarkBackground,
+    onBackground87 = OnDarkBackground87,
+    onBackground60 = OnDarkBackground60,
+    onBackground38 = OnDarkBackground38,
+    gray = Gray,
+    lightGray = LightGray,
+    darkGray = DarkGray,
+    yellow = Yellow,
+    green = Green,
+    orange = Orange,
+    mauve = Mauve,
+    white = White,
+    black = Black,
+    red60 = DarkRed60,
+    red = DarkRed
+)
+@SuppressLint("CompositionLocalNaming")
+private val newsHiveCustomColors = staticCompositionLocalOf { CustomColorsPalette() }
 
 @Composable
 fun NewsHiveTheme(
@@ -61,10 +100,16 @@ fun NewsHiveTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
+    val customColorsPalette=if(darkTheme) onDarkCustomColorsPalette
+    else onLightCustomColorsPalette
+    CompositionLocalProvider(newsHiveCustomColors provides customColorsPalette) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
 }
+@Composable
+fun MaterialTheme.customColors() = newsHiveCustomColors.current
