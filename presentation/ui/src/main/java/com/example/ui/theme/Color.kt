@@ -12,12 +12,14 @@ val Mauve = Color(0xFF65228F)
 val Green = Color(0xFF44C969)
 val Yellow = Color(0xABFFEB3B)
 val Orange = Color(0xFFEF882A)
+val transparent= Color(0x00000000)
 
 val Gray = Color(0xFFBEBEBE)
 val LightGray = Color(0xFFEFEFEF)
 val DarkGray = Color(0xAB4D4D4D)
 
 val LightPrimary = Color(0xFFFB6A00)
+val OnLightPrimary = Color(0xFFFFFFFF)
 val LightCard = Color(0xFFFFFFFF)
 val LightBorder = Color(0xCCEAEAEA)
 val LightBackground = Color(0xFFF5F5F5)
@@ -30,6 +32,7 @@ val LightRed60 = Color(0x99FF3838)
 val LightRed = Color(0xFFE82424)
 
 val DarkPrimary = Color(0xFFFB6A00)
+val OnDarkPrimary = Color(0xFFFFFFFF)
 val DarkCard = Color(0xFF262626)
 val DarkBorder = Color(0xFF302F2F)
 val DarkBackground = Color(0xFF1F1F1F)
@@ -44,6 +47,7 @@ val DarkRed = Color(0xFFFF6B6B)
 @Immutable
 data class CustomColorsPalette(
     val primary: Color = Color.Unspecified,
+    val onPrimary: Color = Color.Unspecified,
     val border: Color = Color.Unspecified,
     val card: Color = Color.Unspecified,
     val statusBar: Color = Color.Unspecified,
@@ -61,5 +65,6 @@ data class CustomColorsPalette(
     val white: Color = Color.Unspecified,
     val black: Color = Color.Unspecified,
     val red: Color = Color.Unspecified,
-    val red60: Color = Color.Unspecified
+    val red60: Color = Color.Unspecified,
+    val transparent: Color = Color.Unspecified
 )

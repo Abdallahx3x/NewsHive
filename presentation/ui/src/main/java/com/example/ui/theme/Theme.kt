@@ -32,6 +32,7 @@ private val LightColorScheme = lightColorScheme(
 
 val onLightCustomColorsPalette = CustomColorsPalette(
     primary = LightPrimary,
+    onPrimary = OnLightPrimary,
     border = LightBorder,
     card = LightCard,
     statusBar = LightStatusBar,
@@ -49,11 +50,13 @@ val onLightCustomColorsPalette = CustomColorsPalette(
     white = White,
     black = Black,
     red60 = LightRed60,
-    red = LightRed
+    red = LightRed,
+    transparent = transparent
 )
 
 val onDarkCustomColorsPalette = CustomColorsPalette(
     primary = DarkPrimary,
+    onPrimary = OnDarkPrimary,
     border = DarkBorder,
     card = DarkCard,
     statusBar = DarkStatusBar,
@@ -71,7 +74,8 @@ val onDarkCustomColorsPalette = CustomColorsPalette(
     white = White,
     black = Black,
     red60 = DarkRed60,
-    red = DarkRed
+    red = DarkRed,
+    transparent = transparent
 )
 @SuppressLint("CompositionLocalNaming")
 private val newsHiveCustomColors = staticCompositionLocalOf { CustomColorsPalette() }
