@@ -8,8 +8,8 @@ import javax.inject.Inject
 class NewsHiveRetrofitDataSource @Inject constructor(
     private val newsHiveService: NewsHiveService
 ) : RemoteDataStore {
-    override suspend fun getBreakingNews(): NewsResponseDto {
-        return wrapApiCall { newsHiveService.getBreakingNews() }
+    override suspend fun getLatestNews(sort:String): NewsResponseDto {
+        return wrapApiCall { newsHiveService.getLatestNews(sort) }
     }
 }
 

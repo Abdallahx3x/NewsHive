@@ -53,7 +53,10 @@ object Dependencies {
 
      const val activityCompose = "androidx.activity:activity-compose:$ACTIVITY_COMPOSE"
      const val composeBom = "androidx.compose:compose-bom:$COMPOSE_BOM"
-     const val composeUi = "androidx.compose.ui:ui"
+     const val composeUi = "androidx.compose.ui:ui:$COMPOSE_FOUNDATION_VERSION"
+    const val composeUtil =  "androidx.compose.ui:ui-util"
+
+
      const val composeRuntime = "androidx.compose.runtime:runtime"
      const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
      const val composeUiPreviewTool = "androidx.compose.ui:ui-tooling-preview"

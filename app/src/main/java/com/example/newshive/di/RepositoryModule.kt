@@ -1,7 +1,7 @@
 package com.example.newshive.di
 
 import com.example.remote.NewsHiveRetrofitDataSource
-import com.example.repositories.NewsHiveRepositoryImplementation
+import com.example.repositories.NewsHiveRepositoryImpl
 import com.example.repositories.RemoteDataStore
 import com.example.usecases.NewsHiveRepository
 import dagger.Binds
@@ -17,7 +17,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindRepository(
-        getAllNewsRepositoryImplementation: NewsHiveRepositoryImplementation
+        getAllNewsRepositoryImplementation: NewsHiveRepositoryImpl
     ): NewsHiveRepository
 
 

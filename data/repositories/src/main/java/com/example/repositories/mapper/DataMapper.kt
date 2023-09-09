@@ -1,13 +1,13 @@
 package com.example.repositories.mapper
 
-import com.example.entities.news.BreakingNews
+import com.example.entities.news.LatestNews
 import com.example.repositories.dto.DataDto
 
-fun DataDto.toBreakingNews(): BreakingNews {
-    return BreakingNews(
-        author = this.author ?: "",
+fun DataDto.toLatestNews(): LatestNews {
+    return LatestNews(
+        category = this.category ?: "",
         title = this.title ?: "",
-        imageUrl = this.url ?: "",
+        imageUrl = this.image ?: "",
+        publishedAt = this.publishedAt?:""
     )
 }
-

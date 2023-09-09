@@ -4,5 +4,5 @@ import javax.inject.Inject
 class GetBreakingNewsUseCase @Inject constructor (
     private val newsHiveRepository: NewsHiveRepository
 ) {
-  suspend fun invoke() = newsHiveRepository.getBreakingNews()
+  suspend fun invoke() = newsHiveRepository.getLatestNews("published_desc").take(5)
 }
