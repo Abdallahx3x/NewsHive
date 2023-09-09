@@ -1,8 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
-    id ("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -33,7 +33,7 @@ android {
         jvmTarget = "17"
     }
     composeOptions {
-        kotlinCompilerExtensionVersion ="1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
     buildFeatures {
         compose = true
@@ -55,19 +55,21 @@ dependencies {
     implementation(Dependencies.composeUi)
     implementation(Dependencies.composeUiGraphics)
     implementation(Dependencies.composeUiPreviewTool)
+    implementation(Dependencies.coil)
+    implementation(Dependencies.navigationCompose)
+
 
 
     implementation(Dependencies.composeMaterial3)
-    implementation (Dependencies.hilt)
-    kapt (Dependencies.hiltCompiler)
+    implementation(Dependencies.hilt)
+    kapt(Dependencies.hiltCompiler)
 
 
     implementation(Dependencies.hiltNavigation)
-
+    implementation(Dependencies.composeUtil)
 
     implementation(Dependencies.lifecycleViewModel)
     implementation(Dependencies.lifecycleRuntime)
-
 
 
     testImplementation(Dependencies.junit)
