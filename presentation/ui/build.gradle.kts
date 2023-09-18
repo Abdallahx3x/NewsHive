@@ -61,10 +61,6 @@ dependencies {
     implementation (Dependencies.accompanistPager)
     implementation (Dependencies.accompanistPagerIndicators)
 
-
-//    implementation ("com.google.accompanist:accompanist-pager:0.27.1")
-//    implementation ("com.google.accompanist:accompanist-pager-indicators:0.27.1")
-
     implementation(Dependencies.composeMaterial3)
     implementation(Dependencies.hilt)
     kapt(Dependencies.hiltCompiler)
