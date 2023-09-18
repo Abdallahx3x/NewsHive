@@ -27,6 +27,7 @@ object Dependencies {
     private const val APP_COMPAT = "1.6.1"
     private const val SYSTEM_UI_CONTROLLER_VERSION = "0.31.0-alpha"
     private const val ENCRYPTED_SHARED_PREF_VERSION = "1.1.0-alpha06"
+    private const val ACCOMPANIST_PAGER = "0.27.1"
 
     const val androidxCore = "androidx.core:core-ktx:$CORE_VERSION"
     const val constraintLayout =
@@ -51,23 +52,27 @@ object Dependencies {
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION"
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION"
 
-     const val activityCompose = "androidx.activity:activity-compose:$ACTIVITY_COMPOSE"
-     const val composeBom = "androidx.compose:compose-bom:$COMPOSE_BOM"
-     const val composeUi = "androidx.compose.ui:ui:$COMPOSE_FOUNDATION_VERSION"
-    const val composeUtil =  "androidx.compose.ui:ui-util"
+    const val activityCompose = "androidx.activity:activity-compose:$ACTIVITY_COMPOSE"
+    const val composeBom = "androidx.compose:compose-bom:$COMPOSE_BOM"
+    const val composeUi = "androidx.compose.ui:ui:$COMPOSE_FOUNDATION_VERSION"
+    const val composeUtil = "androidx.compose.ui:ui-util"
 
 
-     const val composeRuntime = "androidx.compose.runtime:runtime"
-     const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
-     const val composeUiPreviewTool = "androidx.compose.ui:ui-tooling-preview"
-     const val composeMaterial3 = "androidx.compose.material3:material3:$MATERIAL3_VERSION"
-     const val composeJunit = "androidx.compose.ui:ui-test-junit4"
-     const val composeUiTooling = "androidx.compose.ui:ui-tooling"
-     const val composeTestManifest = "androidx.compose.ui:ui-tooling"
-     const val navigationCompose =
+    const val composeRuntime = "androidx.compose.runtime:runtime"
+    const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
+    const val composeUiPreviewTool = "androidx.compose.ui:ui-tooling-preview"
+    const val composeMaterial3 = "androidx.compose.material3:material3:$MATERIAL3_VERSION"
+    const val composeJunit = "androidx.compose.ui:ui-test-junit4"
+    const val composeUiTooling = "androidx.compose.ui:ui-tooling"
+    const val composeTestManifest = "androidx.compose.ui:ui-tooling"
+    const val navigationCompose =
         "androidx.navigation:navigation-compose:$NAVIGATION_COMPOSE"
-     const val composeFoundation =
+    const val composeFoundation =
         "androidx.compose.foundation:foundation:$COMPOSE_FOUNDATION_VERSION"
+    const val accompanistPager = "com.google.accompanist:accompanist-pager:$ACCOMPANIST_PAGER"
+    const val accompanistPagerIndicators =
+        "com.google.accompanist:accompanist-pager-indicators:$ACCOMPANIST_PAGER"
+
 
     @JvmField
     val composeGroup = listOf(
@@ -95,7 +100,6 @@ object Dependencies {
     const val roomKtx = "androidx.room:room-ktx:$ROOM_VERSION"
 
     const val splashScreen = "androidx.core:core-splashscreen:$SPLASH_SCREEN_VERSION"
-
 
 
     const val encryptedSharedPreference =
