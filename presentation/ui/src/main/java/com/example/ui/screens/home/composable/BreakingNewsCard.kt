@@ -1,4 +1,4 @@
-package com.example.ui.screens.composable
+package com.example.ui.screens.home.composable
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image

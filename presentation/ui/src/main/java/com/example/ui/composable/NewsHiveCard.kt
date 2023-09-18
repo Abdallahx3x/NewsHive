@@ -59,12 +59,12 @@ fun NewsHiveCard(
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 Text(
-                    modifier = Modifier, text = category ?: "",
+                    modifier = Modifier, text = category,
                     color = color.onBackground60,
                     style = fontStyle.titleSmall
                 )
                 Text(
-                    modifier = Modifier, text = title ?: "",
+                    modifier = Modifier, text = title,
                     color = color.onBackground87,
                     style = fontStyle.titleMedium,
                     maxLines = 2,
