@@ -1,11 +1,10 @@
-package com.example.ui.screens.composable
+package com.example.ui.screens.home
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.composable
 import com.example.ui.Screen
-import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.bottomNavigation.BottomNavigationItem
 
 fun NavGraphBuilder.homeRoute() {

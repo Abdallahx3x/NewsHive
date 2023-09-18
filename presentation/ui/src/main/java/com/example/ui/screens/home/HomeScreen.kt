@@ -1,5 +1,6 @@
-package com.example.ui.screens
+package com.example.ui.screens.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -21,6 +22,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,10 +40,11 @@ import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.composable.NewsHiveCard
-import com.example.ui.screens.composable.BreakingNewsCard
+import com.example.ui.screens.home.composable.BreakingNewsCard
 import com.example.ui.theme.customColors
-import com.example.viewmodel.HomeUiState
-import com.example.viewmodel.HomeViewModel
+import com.example.viewmodel.home.HomeInteraction
+import com.example.viewmodel.home.HomeUiState
+import com.example.viewmodel.home.HomeViewModel
 import kotlin.math.absoluteValue
 
 
@@ -50,14 +53,15 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
-    HomeContent(state)
+    HomeContent(state,viewModel)
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContent(
-    state: HomeUiState
+    state: HomeUiState,
+    homeInteraction: HomeInteraction
 ) {
     val color = MaterialTheme.customColors()
     val fontStyle = MaterialTheme.typography

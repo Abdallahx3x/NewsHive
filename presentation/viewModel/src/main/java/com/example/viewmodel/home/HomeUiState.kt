@@ -1,10 +1,12 @@
-package com.example.viewmodel
+package com.example.viewmodel.home
 
 
 
 data class HomeUiState(
     val breakingNewsUiState: List<BreakingNewsUiState>?= emptyList(),
-    val recommendedNewsUiState: List<RecommendedNewsUiState>?= emptyList()
+    val recommendedNewsUiState: List<RecommendedNewsUiState>?= emptyList(),
+    val isLoading:Boolean=false,
+    val error:String?=null
 )
 data class BreakingNewsUiState(
     val title:String?="",
