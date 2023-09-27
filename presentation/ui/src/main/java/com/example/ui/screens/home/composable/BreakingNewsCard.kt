@@ -32,6 +32,7 @@ import com.example.ui.theme.customColors
 fun BreakingNewsCard(
     title: String?,
     painter: Painter,
+    onClick:()->Unit,
     contentDescription: String = ""
 ) {
     val colors = MaterialTheme.customColors()
@@ -43,7 +44,7 @@ fun BreakingNewsCard(
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(5.dp),
-        onClick = {}
+        onClick = {onClick()}
     ) {
         Box {
             Image(
@@ -87,6 +88,6 @@ fun BreakingNewsCardPreview() {
     BreakingNewsCard(
         "moo salah score a wonderful goal", rememberAsyncImagePainter(
             model = "https://egyptianstreets.com/wp-content/uploads/2022/10/GettyImages-1243921482.v1.jpg"
-        )
+        ),{}
     )
 }
