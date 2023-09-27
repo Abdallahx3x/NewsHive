@@ -1,7 +1,7 @@
 package com.example.repositories
 
-import com.example.entities.news.LatestNews
-import com.example.repositories.mapper.toLatestNews
+import com.example.entities.news.NewsItemEntity
+import com.example.repositories.mapper.toNewsItemEntity
 import com.example.usecases.NewsHiveRepository
 import javax.inject.Inject
 
@@ -12,10 +12,10 @@ class NewsHiveRepositoryImpl @Inject constructor(
         sort: String,
         countries: String,
         language: String
-    ): List<LatestNews> {
+    ): List<NewsItemEntity>? {
         return remoteDataStore.getLatestNews(
             sort, countries, language
-        ).data!!.map { it!!.toLatestNews() }
+        ).data?.map { it.toNewsItemEntity() }
     }
 
     override suspend fun getCategoryNews(
@@ -23,10 +23,10 @@ class NewsHiveRepositoryImpl @Inject constructor(
         sort: String,
         countries: String,
         language: String
-    ): List<LatestNews> {
+    ): List<NewsItemEntity>? {
         return remoteDataStore.getCategoryNews(
             categoryName, sort, countries, language
-        ).data!!.map { it!!.toLatestNews() }
+        ).data?.map { it.toNewsItemEntity() }
     }
 
 }
