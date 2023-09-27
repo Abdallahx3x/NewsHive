@@ -28,6 +28,7 @@ object Dependencies {
     private const val SYSTEM_UI_CONTROLLER_VERSION = "0.31.0-alpha"
     private const val ENCRYPTED_SHARED_PREF_VERSION = "1.1.0-alpha06"
     private const val ACCOMPANIST_PAGER = "0.27.1"
+    private const val GSON_VERSION = "2.9.0"
 
     const val androidxCore = "androidx.core:core-ktx:$CORE_VERSION"
     const val constraintLayout =
@@ -72,6 +73,7 @@ object Dependencies {
     const val accompanistPager = "com.google.accompanist:accompanist-pager:$ACCOMPANIST_PAGER"
     const val accompanistPagerIndicators =
         "com.google.accompanist:accompanist-pager-indicators:$ACCOMPANIST_PAGER"
+    const val gson = "com.google.code.gson:gson:$GSON_VERSION"
 
 
     @JvmField

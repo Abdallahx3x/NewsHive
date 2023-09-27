@@ -63,7 +63,6 @@ dependencies {
     implementation(project(Modules.DATA_LOCAL))
     implementation(project(Modules.DOMAIN_ENTITIES))
 
-
     implementation(Dependencies.androidxCore)
     implementation(Dependencies.lifecycleRuntime)
     implementation(Dependencies.activityCompose)
@@ -75,15 +74,8 @@ dependencies {
     implementation(Dependencies.retrofit)
     implementation (Dependencies.gsonConverter)
     implementation (Dependencies.hilt)
-//    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-   // implementation(platform("com..okhttp3:okhttp-bom:4.10.0"))
-
-
     kapt(Dependencies.hiltCompiler)
     implementation (Dependencies.logging)
-
-
-
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
@@ -92,7 +84,4 @@ dependencies {
     debugImplementation(Dependencies.composeUiTooling)
     debugImplementation(Dependencies.composeTestManifest)
     debugImplementation(Dependencies.composeTestManifest)
-
-
-
 }
