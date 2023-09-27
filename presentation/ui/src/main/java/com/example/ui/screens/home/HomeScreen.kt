@@ -1,6 +1,5 @@
 package com.example.ui.screens.home
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -22,7 +21,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,11 +36,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.composable.NewsHiveCard
+import com.example.ui.screens.details.navigateToDetails
 import com.example.ui.screens.home.composable.BreakingNewsCard
 import com.example.ui.theme.customColors
+import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.home.HomeInteraction
+import com.example.viewmodel.home.HomeUiEffect
 import com.example.viewmodel.home.HomeUiState
 import com.example.viewmodel.home.HomeViewModel
 import kotlin.math.absoluteValue
@@ -51,9 +54,21 @@ import kotlin.math.absoluteValue
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController
 ) {
+    CollectUiEffect(viewModel.effect) { homeUiEffect ->
+        when (homeUiEffect) {
+            is HomeUiEffect.NavigateToDetails -> {
+                navController.navigateToDetails(
+                    homeUiEffect.newsItem
+                )
+            }
+
+        }
+
+    }
     val state by viewModel.state.collectAsState()
-    HomeContent(state,viewModel)
+    HomeContent(state, viewModel)
 }
 
 
@@ -131,8 +146,13 @@ fun HomeContent(
                 )
                 {
                     BreakingNewsCard(
-                        it[page].title,
-                        rememberAsyncImagePainter(it[page].imageUrl)
+                        title = it[page].title,
+                        painter = rememberAsyncImagePainter(it[page].imageUrl),
+                        onClick = {
+                            homeInteraction.onClickBreakingNewsItem(
+                                it[page].title, it[page].content, it[page].imageUrl, it[page].url,it[page]
+                            )
+                        }
                     )
                 }
             }
@@ -184,9 +204,9 @@ fun HomeContent(
                 NewsHiveCard(
                     modifier = Modifier.padding(bottom = 16.dp),
                     painter = rememberAsyncImagePainter(item.imageUrl),
-                    category = item.category!!,
-                    title = item.title!!,
-                    date = item.publishedAt!!
+                    category = item.category,
+                    title = item.title,
+                    date = item.publishedAt
                 )
             }
         }
@@ -197,5 +217,5 @@ fun HomeContent(
 @Composable
 @Preview()
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(navController = rememberNavController())
 }

@@ -1,14 +1,10 @@
 package com.example.ui.screens.discover
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +20,6 @@ import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.TabPosition
 import androidx.compose.material.Text
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -96,7 +91,7 @@ fun DiscoverContent(
                             modifier = Modifier,
                             text = text,
                             style = MaterialTheme.typography.bodyLarge,
-                            color=if(pageState.currentPage == index)color.card else color.onBackground87
+                            color = if (pageState.currentPage == index) color.card else color.onBackground87
                         )
                     }
                 )
@@ -121,12 +116,11 @@ fun DiscoverContent(
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(news) { item ->
-                        Log.i("dsdsesdwwew",item.imageUrl.toString())
                         DiscoverCard(
                             painter = rememberAsyncImagePainter(model = item.imageUrl),
-                            category = item.categoryName!!,
-                            title = item.title!!,
-                            date = item.publishedAt!!
+                            category = item.category,
+                            title = item.title,
+                            date = item.publishedAt,
                         )
                     }
                 }
