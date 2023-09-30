@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
-
 }
 
 android {
@@ -21,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField( "String", "API_KEY", "${properties["API_KEY"]}")
+        buildConfigField( "String", "BASE_URL", "${properties["BASE_URL"]}")
     }
 
     buildTypes {
@@ -41,7 +42,7 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
-        compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion ="1.4.3"

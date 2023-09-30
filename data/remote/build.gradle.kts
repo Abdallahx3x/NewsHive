@@ -9,9 +9,11 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField( "String", "API_KEY", "${properties["API_KEY"]}")
+        buildConfigField( "String", "BASE_URL", "${properties["BASE_URL"]}")
     }
 
     buildTypes {
@@ -29,6 +31,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

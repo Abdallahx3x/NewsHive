@@ -1,5 +1,6 @@
 package com.example.newshive.di
 
+import com.example.remote.BuildConfig
 import com.example.remote.NewsHiveInterceptor
 import com.example.remote.NewsHiveService
 import dagger.Module
@@ -16,8 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "http://api.mediastack.com/v1/"
-
 
     @Singleton
     @Provides
@@ -42,7 +41,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder()
         .client(okHttpClient)
-        .baseUrl(BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(gsonConverterFactory).build()
 
 
