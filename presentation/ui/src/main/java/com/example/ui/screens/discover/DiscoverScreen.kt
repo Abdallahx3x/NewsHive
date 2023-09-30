@@ -53,7 +53,6 @@ fun DiscoverScreen(
     DiscoverContent(state, viewModel)
 }
 
-
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun DiscoverContent(
@@ -61,7 +60,6 @@ fun DiscoverContent(
     discoverInteraction: DiscoverInteraction
 ) {
     val pageState = rememberPagerState()
-    val pages = listOf("sports", "technology", "science", "health", "business", "entertainment")
     val color = MaterialTheme.customColors()
     val tabIndicator = @Composable { tabPosition: List<TabPosition> ->
         TabIndicator(pageState, tabPosition)
@@ -80,7 +78,7 @@ fun DiscoverContent(
             indicator = tabIndicator,
             backgroundColor = color.card,
             divider = { Divider(thickness = 0.dp, color = color.background) }) {
-            pages.forEachIndexed { index, text ->
+            state.categories.forEachIndexed { index, text ->
                 Tab(modifier = Modifier
                     .zIndex(6f)
                     .clip(RoundedCornerShape(50)),
@@ -100,7 +98,7 @@ fun DiscoverContent(
 
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),
-            count = pages.size,
+            count =  state.categories.size,
             state = pageState
         ) { page ->
             val newList = when (page) {
@@ -111,9 +109,7 @@ fun DiscoverContent(
                 4 -> state.businessNews
                 else -> null
             }
-
             newList?.let { news ->
-
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(news) { item ->
                         DiscoverCard(
@@ -169,7 +165,6 @@ fun TabIndicator(pagerState: PagerState, tabPositions: List<TabPosition>) {
             .padding(2.dp)
             .fillMaxSize()
             .background(color = MaterialTheme.customColors().primary, RoundedCornerShape(50))
-            //.border(BorderStroke(2.dp, MaterialTheme.customColors().card), RoundedCornerShape(50))
             .zIndex(1f)
     )
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,7 +33,7 @@ import com.example.ui.theme.customColors
 fun BreakingNewsCard(
     title: String?,
     painter: Painter,
-    onClick:()->Unit,
+    onClick: () -> Unit,
     contentDescription: String = ""
 ) {
     val colors = MaterialTheme.customColors()
@@ -44,9 +45,12 @@ fun BreakingNewsCard(
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(5.dp),
-        onClick = {onClick()}
+        onClick = { onClick() }
     ) {
         Box {
+            CircularProgressIndicator(modifier = Modifier
+                .size(24.dp)
+                .align(Alignment.Center))
             Image(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -88,6 +92,6 @@ fun BreakingNewsCardPreview() {
     BreakingNewsCard(
         "moo salah score a wonderful goal", rememberAsyncImagePainter(
             model = "https://egyptianstreets.com/wp-content/uploads/2022/10/GettyImages-1243921482.v1.jpg"
-        ),{}
+        ), {}
     )
 }

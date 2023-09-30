@@ -84,6 +84,7 @@ class HomeViewModel @Inject constructor(
 
 
     private fun onError(throwable: Throwable) {
+
         _state.update { it.copy(isLoading = false, error = throwable.message) }
     }
 

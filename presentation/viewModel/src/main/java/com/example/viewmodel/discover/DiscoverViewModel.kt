@@ -27,15 +27,13 @@ class DiscoverViewModel @Inject constructor(
 
     private fun fetchCategoryNews() {
         _state.update { it.copy(isLoading = true, error = null) }
-        val categories =
-            listOf("sports", "science", "health", "technology", "business", "entertainment")
-        categories.forEach { category ->
+        state.value.categories.forEach { category ->
             tryToExecute(
                 call = {
                     getCategoryNewsUseCase.getLastCategoryNews(category)
                 },
                 onSuccess = { newList ->
-                    updateUiStateForCategory(category, newList)
+                    newList?.let { updateUiStateForCategory(category, it) }
                 },
                 onError = { throwable ->
                     onError(throwable)
@@ -44,15 +42,14 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    private fun updateUiStateForCategory(category: String, newsList: List<NewsItemEntity>?) {
+    private fun updateUiStateForCategory(category: String, newsList: List<NewsItemEntity>) {
         _state.update { it.copy(isLoading = false, error = null) }
         when (category) {
-            "sports" -> _state.update { it.copy(sportsNews = newsList?.toNewsItemUiState()) }
-            "science" -> _state.update { it.copy(scienceNews = newsList?.toNewsItemUiState()) }
-            "health" -> _state.update { it.copy(healthNews = newsList?.toNewsItemUiState()) }
-            "technology" -> _state.update { it.copy(technologyNews = newsList?.toNewsItemUiState()) }
-            "business" -> _state.update { it.copy(businessNews = newsList?.toNewsItemUiState()) }
-            "entertainment" -> _state.update { it.copy(entertainmentNews = newsList?.toNewsItemUiState()) }
+            "sports" -> _state.update { it.copy(sportsNews = newsList.toNewsItemUiState()) }
+            "science" -> _state.update { it.copy(scienceNews = newsList.toNewsItemUiState()) }
+            "health" -> _state.update { it.copy(healthNews = newsList.toNewsItemUiState()) }
+            "technology" -> _state.update { it.copy(technologyNews = newsList.toNewsItemUiState()) }
+            "business" -> _state.update { it.copy(businessNews = newsList.toNewsItemUiState()) }
         }
     }
 

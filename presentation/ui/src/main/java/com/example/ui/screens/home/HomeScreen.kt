@@ -21,12 +21,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -201,16 +203,23 @@ fun HomeContent(
         LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
             items(state.recommendedNewsUiState!!.size) {
                 val item = state.recommendedNewsUiState!![it]
-                NewsHiveCard(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    painter = rememberAsyncImagePainter(item.imageUrl),
-                    category = item.category,
-                    title = item.title,
-                    date = item.publishedAt
-                )
+                Box {
+                    CircularProgressIndicator(modifier = Modifier.padding(bottom = 16.dp, start = 26.dp).size(24.dp).align(CenterStart))
+                    NewsHiveCard(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        painter = rememberAsyncImagePainter(item.imageUrl),
+                        category = item.category,
+                        title = item.title,
+                        date = item.publishedAt
+                    )
+
+                }
+
             }
         }
+
     }
+
 }
 
 
