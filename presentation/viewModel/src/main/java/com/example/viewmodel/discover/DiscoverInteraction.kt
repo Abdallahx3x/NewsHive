@@ -1,6 +1,7 @@
 package com.example.viewmodel.discover
 
+
 interface DiscoverInteraction {
-   fun  onClickCategoryItem()
+   fun  onClickCategoryItem(categoryNewsUiState: CategoryNewsUiState)
    fun updatePageIndex(pageIndex:Int)
 }

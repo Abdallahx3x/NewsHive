@@ -1,3 +1,9 @@
 package com.example.viewmodel.discover
 
-sealed interface DiscoverUiEffect
+import com.example.viewmodel.base.BaseViewModel
+
+sealed interface DiscoverUiEffect: BaseViewModel.BaseUiEffect {
+    data class NavigateToDetails(
+        val newsItem: String
+    ) : DiscoverUiEffect
+}

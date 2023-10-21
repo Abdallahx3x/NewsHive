@@ -12,7 +12,7 @@ import com.example.ui.screens.home.homeRoute
 fun NewsHiveNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.Home.route) {
         homeRoute(navController)
-        discoverRoute()
+        discoverRoute(navController)
         detailsRoute()
     }
 }

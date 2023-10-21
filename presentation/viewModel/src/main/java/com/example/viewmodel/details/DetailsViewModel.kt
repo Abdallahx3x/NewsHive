@@ -1,14 +1,17 @@
 package com.example.viewmodel.details
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.SavedStateHandle
+import com.example.viewmodel.base.BaseUiState
 import com.example.viewmodel.base.BaseViewModel
-import com.example.viewmodel.home.NewsUiState
-import com.example.viewmodel.toDecodeNewsUiState
+import com.example.viewmodel.decode
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
@@ -19,8 +22,8 @@ class DetailsViewModel @Inject constructor(
     init {
         val gson= Gson()
         val json =detailsArgs.newsItem
-        val newsItem=gson.fromJson(json,NewsUiState::class.java)
-        val decodeNewsItem=newsItem.toDecodeNewsUiState()
+        val newsItem=gson.fromJson(json,BaseUiState::class.java)
+        val decodeNewsItem=newsItem.decode()
         _state.update {
             it.copy(
                 title = decodeNewsItem.title,

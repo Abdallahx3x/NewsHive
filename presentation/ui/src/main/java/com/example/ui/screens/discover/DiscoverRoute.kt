@@ -7,9 +7,9 @@ import androidx.navigation.compose.composable
 import com.example.ui.Screen
 import com.example.ui.screens.bottomNavigation.BottomNavigationItem
 
-fun NavGraphBuilder.discoverRoute(){
+fun NavGraphBuilder.discoverRoute(navController: NavController){
     composable(BottomNavigationItem.Discover.screenRoute){
-        DiscoverScreen()
+        DiscoverScreen(navController = navController)
     }
 }
 fun NavController.navigateToDiscover(builder:NavOptionsBuilder.()-> Unit={}){
