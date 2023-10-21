@@ -1,11 +1,10 @@
 package com.example.viewmodel.details
 
+import com.example.viewmodel.base.BaseUiState
+
 data class DetailsUiState(
-    val title:String="",
-    val imageUrl:String="",
-    val publishedAt:String="",
-    val category: String="",
-    val content: String="",
-    val url: String="",
-    val author: String="",
-)
+    override val title: String = "",
+    override val imageUrl: String = "",
+    override val content: String = "",
+    override val url: String = ""
+) : BaseUiState()
