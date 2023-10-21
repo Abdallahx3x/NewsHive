@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+
     implementation(project(Modules.DOMAIN_USE_CASES))
     implementation(Dependencies.androidxCore)
     testImplementation(Dependencies.junit)
@@ -46,6 +47,7 @@ dependencies {
     implementation(Dependencies.coroutines)
     implementation(Dependencies.lifecycleViewModel)
     implementation(Dependencies.gson)
+    implementation(Dependencies.apacheText)
     kapt (Dependencies.hiltCompiler)
 
 }

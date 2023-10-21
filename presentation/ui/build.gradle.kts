@@ -60,18 +60,13 @@ dependencies {
     implementation (Dependencies.systemUiController)
     implementation (Dependencies.accompanistPager)
     implementation (Dependencies.accompanistPagerIndicators)
-
+    implementation (Dependencies.lottie)
     implementation(Dependencies.composeMaterial3)
     implementation(Dependencies.hilt)
-    kapt(Dependencies.hiltCompiler)
-
-
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeUtil)
-
     implementation(Dependencies.lifecycleViewModel)
-    implementation(Dependencies.lifecycleRuntime)
-
+    kapt(Dependencies.hiltCompiler)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)

@@ -29,6 +29,8 @@ object Dependencies {
     private const val ENCRYPTED_SHARED_PREF_VERSION = "1.1.0-alpha06"
     private const val ACCOMPANIST_PAGER = "0.27.1"
     private const val GSON_VERSION = "2.9.0"
+    private const val APACHE_TEXT_VERSION = "1.9"
+
 
     const val androidxCore = "androidx.core:core-ktx:$CORE_VERSION"
     const val constraintLayout =
@@ -100,6 +102,8 @@ object Dependencies {
     const val roomRuntime = "androidx.room:room-runtime:$ROOM_VERSION"
     const val roomCompiler = "androidx.room:room-compiler:$ROOM_VERSION"
     const val roomKtx = "androidx.room:room-ktx:$ROOM_VERSION"
+    const val apacheText ="org.apache.commons:commons-text:$APACHE_TEXT_VERSION"
+
 
     const val splashScreen = "androidx.core:core-splashscreen:$SPLASH_SCREEN_VERSION"
 
