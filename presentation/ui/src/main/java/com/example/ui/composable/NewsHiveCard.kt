@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,9 +33,11 @@ import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsHiveCard(
     modifier: Modifier,
+    onClick: () -> Unit,
     painter: Painter,
     contentDescription: String = "",
     category: String,
@@ -47,13 +50,17 @@ fun NewsHiveCard(
         modifier = modifier
             .fillMaxWidth()
             .height(90.dp),
-        colors = CardDefaults.cardColors(color.card)
+        colors = CardDefaults.cardColors(color.card),
+        shape = RoundedCornerShape(12.dp),
+        onClick = { onClick() }
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box {
-                CircularProgressIndicator(modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.Center)
+                )
                 Image(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -97,10 +104,13 @@ fun NewsHiveCard(
 fun NewsHiveCardPreview() {
     NewsHiveTheme {
         NewsHiveCard(
-            modifier = Modifier, painter = painterResource(id = R.drawable.moosalah), "testContent",
-            "Title", "MmooesttestCategory" +
-                    "  title:String," +
-                    "  title:String,  title:String,  title:String,", "testDate"
+            modifier = Modifier,
+            painter = painterResource(id = R.drawable.moosalah),
+            onClick = {},
+            category = "test Category",
+            title = "Title",
+            contentDescription = "Mmooesttest Mmooesttest Description ",
+            date = "testDate"
         )
     }
 
