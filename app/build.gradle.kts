@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
-
 }
 
 android {
@@ -21,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField( "String", "API_KEY", "${properties["API_KEY"]}")
+        buildConfigField( "String", "BASE_URL", "${properties["BASE_URL"]}")
     }
 
     buildTypes {
@@ -41,7 +42,7 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
-        compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion ="1.4.3"
@@ -63,7 +64,6 @@ dependencies {
     implementation(project(Modules.DATA_LOCAL))
     implementation(project(Modules.DOMAIN_ENTITIES))
 
-
     implementation(Dependencies.androidxCore)
     implementation(Dependencies.lifecycleRuntime)
     implementation(Dependencies.activityCompose)
@@ -75,15 +75,8 @@ dependencies {
     implementation(Dependencies.retrofit)
     implementation (Dependencies.gsonConverter)
     implementation (Dependencies.hilt)
-//    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-   // implementation(platform("com..okhttp3:okhttp-bom:4.10.0"))
-
-
     kapt(Dependencies.hiltCompiler)
     implementation (Dependencies.logging)
-
-
-
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
@@ -92,7 +85,4 @@ dependencies {
     debugImplementation(Dependencies.composeUiTooling)
     debugImplementation(Dependencies.composeTestManifest)
     debugImplementation(Dependencies.composeTestManifest)
-
-
-
 }

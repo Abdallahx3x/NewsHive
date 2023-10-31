@@ -2,6 +2,6 @@ package com.example.viewmodel.home
 
 interface HomeInteraction {
     fun onClickViewAll()
-    fun onClickBreakingNewsItem()
-    fun onClickRecommendedNewsItem()
+    fun onClickBreakingNewsItem(breakingNewsUiState: BreakingNewsUiState)
+    fun onClickRecommendedNewsItem(recommendedNewsUiState: RecommendedNewsUiState)
 }

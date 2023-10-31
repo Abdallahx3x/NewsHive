@@ -1,3 +1,9 @@
 package com.example.viewmodel.home
 
-sealed interface HomeUiEffect
+import com.example.viewmodel.base.BaseViewModel
+
+sealed interface HomeUiEffect:BaseViewModel.BaseUiEffect{
+    data class NavigateToDetails(
+        val newsItem:String
+    ):HomeUiEffect
+}

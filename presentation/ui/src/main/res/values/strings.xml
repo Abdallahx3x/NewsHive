@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewsHive</string>
+    <string name="sports">sports</string>
+    <string name="newshive">NewsHive</string>
 </resources>

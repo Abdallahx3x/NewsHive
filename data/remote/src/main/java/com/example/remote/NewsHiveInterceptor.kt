@@ -7,9 +7,8 @@ import javax.inject.Inject
 class NewsHiveInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val urlWithAccessKey = chain.request().url().newBuilder()
-            .addQueryParameter(API_KEY_NAME, API_KEY_VALUE)
+            .addQueryParameter(API_KEY_NAME, BuildConfig.API_KEY)
             .build()
-
 
         val requestWithAccessKey = chain.request().newBuilder()
             .url(urlWithAccessKey).build()
@@ -18,6 +17,5 @@ class NewsHiveInterceptor @Inject constructor() : Interceptor {
 
     companion object {
         const val API_KEY_NAME = "access_key"
-        const val API_KEY_VALUE = "cc8734c0dd19da199abaca678ea84b4e"
     }
 }

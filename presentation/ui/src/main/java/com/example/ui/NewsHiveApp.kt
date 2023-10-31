@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import com.example.ui.screens.bottomNavigation.BottomNavigation
-import com.example.ui.screens.bottomNavigation.currentRoute
 import com.example.ui.screens.bottomNavigation.BottomNavigationItem
+import com.example.ui.screens.bottomNavigation.currentRoute
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -22,15 +22,17 @@ fun NewsHiveApp() {
         BottomNavigationItem.Home.screenRoute,
         BottomNavigationItem.Discover.screenRoute
         -> true
+
         else -> false
     }
     val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(Color.White,darkIcons = true)
+    systemUiController.setSystemBarsColor(Color.White, darkIcons = true)
 
-    Scaffold(bottomBar = { BottomNavigation(navController = navController) }) {paddingValue->
-        Box (modifier = Modifier.padding(paddingValue)){
+    Scaffold(bottomBar = { if (shouldShowBottomNavigation) BottomNavigation(navController = navController) }) { paddingValue ->
+        Box(modifier = Modifier.padding(paddingValue)) {
             NewsHiveNavGraph(navController = navController)
         }
     }
 
 }
+

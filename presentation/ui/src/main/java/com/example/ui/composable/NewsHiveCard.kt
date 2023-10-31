@@ -2,19 +2,24 @@ package com.example.ui.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
@@ -28,9 +33,12 @@ import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsHiveCard(
-    modifier: Modifier, painter: Painter,
+    modifier: Modifier,
+    onClick: () -> Unit,
+    painter: Painter,
     contentDescription: String = "",
     category: String,
     title: String,
@@ -42,16 +50,27 @@ fun NewsHiveCard(
         modifier = modifier
             .fillMaxWidth()
             .height(90.dp),
-        colors = CardDefaults.cardColors(color.card)
+        colors = CardDefaults.cardColors(color.card),
+        shape = RoundedCornerShape(12.dp),
+        onClick = { onClick() }
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Image(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(90.dp)
-                    .clip(RoundedCornerShape(12.dp)), painter = painter,
-                contentScale = ContentScale.Crop, contentDescription = contentDescription
-            )
+            Box {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.Center)
+                )
+                Image(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(90.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                    painter = painter,
+                    contentScale = ContentScale.Crop, contentDescription = contentDescription
+                )
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -71,7 +90,7 @@ fun NewsHiveCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    modifier = Modifier, text = date ?: "",
+                    modifier = Modifier, text = date,
                     color = color.onBackground60,
                     style = fontStyle.titleSmall
                 )
@@ -85,10 +104,13 @@ fun NewsHiveCard(
 fun NewsHiveCardPreview() {
     NewsHiveTheme {
         NewsHiveCard(
-            modifier = Modifier, painter = painterResource(id = R.drawable.moosalah), "testContent",
-            "Title", "MmooesttestCategory" +
-                    "  title:String," +
-                    "  title:String,  title:String,  title:String,", "testDate"
+            modifier = Modifier,
+            painter = painterResource(id = R.drawable.moosalah),
+            onClick = {},
+            category = "test Category",
+            title = "Title",
+            contentDescription = "Mmooesttest Mmooesttest Description ",
+            date = "testDate"
         )
     }
 
