@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.ui.screens.details.detailsRoute
 import com.example.ui.screens.discover.discoverRoute
+import com.example.ui.screens.favourites.favouriteRoute
 import com.example.ui.screens.home.homeRoute
 
 
@@ -13,6 +14,7 @@ fun NewsHiveNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.Home.route) {
         homeRoute(navController)
         discoverRoute(navController)
-        detailsRoute()
+        favouriteRoute(navController)
+        detailsRoute(navController)
     }
 }

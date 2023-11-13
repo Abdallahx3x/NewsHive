@@ -26,13 +26,19 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
 import com.example.ui.theme.customColors
+import com.example.viewmodel.details.DetailsInteraction
 import com.example.viewmodel.details.DetailsUiState
 
 @Composable
-fun DetailsImageContent(state: DetailsUiState) {
+fun DetailsImageContent(
+    state: DetailsUiState,
+    detailsInteraction: DetailsInteraction,
+    naveController: NavController
+) {
     val color = MaterialTheme.customColors()
     val fontStyle = MaterialTheme.typography
     Image(
@@ -77,7 +83,7 @@ fun DetailsImageContent(state: DetailsUiState) {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { naveController.popBackStack() }) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_icon),
                     contentDescription = null,
@@ -85,9 +91,9 @@ fun DetailsImageContent(state: DetailsUiState) {
                 )
             }
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { detailsInteraction.onClickSaveIcon(state) }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.saved_icon),
+                    painter = painterResource(id = if (state.changeSavedIconColor) R.drawable.savediconfilled else R.drawable.savedicon),
                     contentDescription = null,
                     tint = color.onPrimary
                 )

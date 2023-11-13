@@ -25,10 +25,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.ui.screens.details.composable.BottomSheetContent
 import com.example.ui.screens.details.composable.DetailsImageContent
 import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
+import com.example.viewmodel.details.DetailsInteraction
 import com.example.viewmodel.details.DetailsUiState
 import com.example.viewmodel.details.DetailsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -36,16 +39,20 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun DetailsScreen(viewModel: DetailsViewModel = hiltViewModel()) {
+fun DetailsScreen(viewModel: DetailsViewModel = hiltViewModel(), navController: NavController) {
     val state by viewModel.state.collectAsState()
-    DetailsContent(state)
+    DetailsContent(state, viewModel, navController)
 }
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsContent(state: DetailsUiState) {
+fun DetailsContent(
+    state: DetailsUiState,
+    detailsInteraction: DetailsInteraction,
+    navController: NavController
+) {
     val color = MaterialTheme.customColors()
     var offsetY by remember { mutableStateOf(0f) }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
@@ -98,7 +105,7 @@ fun DetailsContent(state: DetailsUiState) {
                         }
                     }
                 }) {
-                DetailsImageContent(state)
+                DetailsImageContent(state, detailsInteraction, navController)
             }
         }
     }
@@ -108,7 +115,7 @@ fun DetailsContent(state: DetailsUiState) {
 @Preview
 fun DetailsScreenPreview() {
     NewsHiveTheme {
-        DetailsScreen()
+        DetailsScreen(navController = rememberNavController())
     }
 }
 
