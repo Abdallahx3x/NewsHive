@@ -1,8 +1,8 @@
 package com.example.remote
 
 import com.example.remote.util.wrapApiCall
-import com.example.repositories.RemoteDataStore
-import com.example.repositories.dto.NewsResponseDto
+import com.example.repositories.remote.RemoteDataStore
+import com.example.repositories.remote.NewsResponseDto
 import javax.inject.Inject
 
 class NewsHiveRetrofitDataSource @Inject constructor(
