@@ -1,4 +1,4 @@
-package com.example.repositories.dto
+package com.example.repositories.remote
 
 
 import com.google.gson.annotations.SerializedName

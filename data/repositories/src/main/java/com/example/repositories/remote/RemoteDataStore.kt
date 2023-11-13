@@ -1,6 +1,4 @@
-package com.example.repositories
-
-import com.example.repositories.dto.NewsResponseDto
+package com.example.repositories.remote
 
 interface RemoteDataStore {
     suspend fun getLatestNews(

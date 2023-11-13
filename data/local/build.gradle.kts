@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -36,6 +37,12 @@ dependencies {
     implementation(project(Modules.DATA_REPOSITORIES))
 
     implementation(Dependencies.androidxCore)
+    implementation(Dependencies.roomRuntime)
+    implementation (Dependencies.coroutines)
+    implementation (Dependencies.hilt)
+    implementation (Dependencies.roomKtx)
+    annotationProcessor(Dependencies.roomCompiler)
+    ksp(Dependencies.roomCompiler)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
 

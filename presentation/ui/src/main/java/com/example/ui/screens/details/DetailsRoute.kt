@@ -8,14 +8,14 @@ import androidx.navigation.navArgument
 import com.example.ui.Screen
 import com.example.viewmodel.details.DetailsArgs
 
-fun NavGraphBuilder.detailsRoute() {
+fun NavGraphBuilder.detailsRoute(navController: NavController) {
     composable(
         route = "${Screen.Details.route}/{${DetailsArgs.NEWS_ITEM}}",
         arguments = listOf(
             navArgument(DetailsArgs.NEWS_ITEM) { NavType.StringType }
         )
     ) {
-        DetailsScreen()
+        DetailsScreen(navController = navController)
     }
 
 }

@@ -1,8 +1,10 @@
 package com.example.newshive.di
 
+import com.example.local.RoomDataSource
 import com.example.remote.NewsHiveRetrofitDataSource
+import com.example.repositories.local.LocalDataStore
 import com.example.repositories.NewsHiveRepositoryImpl
-import com.example.repositories.RemoteDataStore
+import com.example.repositories.remote.RemoteDataStore
 import com.example.usecases.NewsHiveRepository
 import dagger.Binds
 import dagger.Module
@@ -14,6 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
+
     @Binds
     @Singleton
     abstract fun bindRepository(
@@ -23,9 +26,16 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindNewsHiveData(
+    abstract fun bindNewsHiveRemoteData(
         newsHiveRetrofitDataSource: NewsHiveRetrofitDataSource
     ): RemoteDataStore
+
+    @Binds
+    @Singleton
+    abstract fun bindNewsHiveLocalData(
+        roomDataSource: RoomDataSource
+    ): LocalDataStore
+
 
 
 }

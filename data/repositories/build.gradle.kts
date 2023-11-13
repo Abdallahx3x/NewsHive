@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -38,6 +39,9 @@ dependencies {
     implementation(project(Modules.DOMAIN_USE_CASES))
 
     implementation(Dependencies.androidxCore)
+    implementation(Dependencies.roomRuntime)
+    annotationProcessor(Dependencies.roomCompiler)
+    ksp(Dependencies.roomCompiler)
     implementation (Dependencies.hilt)
     implementation(Dependencies.gsonConverter)
     testImplementation(Dependencies.junit)

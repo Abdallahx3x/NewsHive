@@ -1,8 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
-
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -32,9 +31,6 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
@@ -48,6 +44,6 @@ dependencies {
     implementation(Dependencies.lifecycleViewModel)
     implementation(Dependencies.gson)
     implementation(Dependencies.apacheText)
-    kapt (Dependencies.hiltCompiler)
+    ksp(Dependencies.hiltCompiler)
 
 }
