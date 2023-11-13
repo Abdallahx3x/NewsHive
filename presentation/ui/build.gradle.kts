@@ -1,8 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -38,9 +38,6 @@ android {
     buildFeatures {
         compose = true
     }
-    kapt {
-        correctErrorTypes = true
-    }
 
 }
 
@@ -66,7 +63,7 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeUtil)
     implementation(Dependencies.lifecycleViewModel)
-    kapt(Dependencies.hiltCompiler)
+    ksp(Dependencies.hiltCompiler)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)

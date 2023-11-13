@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -75,8 +75,11 @@ dependencies {
     implementation(Dependencies.retrofit)
     implementation (Dependencies.gsonConverter)
     implementation (Dependencies.hilt)
-    kapt(Dependencies.hiltCompiler)
+    ksp(Dependencies.hiltCompiler)
     implementation (Dependencies.logging)
+    annotationProcessor(Dependencies.roomCompiler)
+    ksp(Dependencies.roomCompiler)
+    implementation(Dependencies.roomRuntime)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)
