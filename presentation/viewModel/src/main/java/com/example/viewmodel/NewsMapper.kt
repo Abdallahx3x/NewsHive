@@ -3,13 +3,17 @@ package com.example.viewmodel
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.entities.news.NewsEntity
 import com.example.entities.news.NewsItemEntity
 import com.example.viewmodel.base.BaseUiState
+import com.example.viewmodel.details.DetailsUiState
 import com.example.viewmodel.discover.CategoryNewsUiState
+import com.example.viewmodel.favourites.FavouritesItemUiState
 import com.example.viewmodel.home.BreakingNewsUiState
 import com.example.viewmodel.home.RecommendedNewsUiState
 import java.text.SimpleDateFormat
 import java.util.Base64
+import java.util.Date
 import java.util.Locale
 
 @SuppressLint("SimpleDateFormat")
@@ -91,3 +95,32 @@ private fun String.encodeBase64(): String {
 private fun String.decodeBase64(): String {
     return String(Base64.getUrlDecoder().decode(this))
 }
+
+
+
+fun NewsItemEntity.toFavouritesNewsUiState(): FavouritesItemUiState {
+    val publishedTimeString = dateFormat.format(this.publishedTime)
+    return FavouritesItemUiState(
+        title = this.news.title,
+        imageUrl = this.news.imageUrl,
+        content = this.news.content,
+        category = this.news.category,
+        url = this.news.url,
+        publishedAt = publishedTimeString
+    )
+}
+
+fun List<NewsItemEntity>.toFavouritesNewsUiState(): List<FavouritesItemUiState> =
+    this.map { it.toFavouritesNewsUiState() }
+
+fun DetailsUiState.toNewsItemEntity(): NewsItemEntity {
+    return NewsItemEntity(
+        news = NewsEntity( title = this.title,
+            imageUrl = this.imageUrl,
+            content = this.content,
+            category ="",
+            url = this.url,),
+        publishedTime = Date()
+    )
+}
+
