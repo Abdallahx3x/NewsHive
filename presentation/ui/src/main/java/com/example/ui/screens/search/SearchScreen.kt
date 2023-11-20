@@ -1,6 +1,7 @@
 package com.example.ui.screens.search
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -37,6 +39,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.ui.R
 import com.example.ui.composable.NewsHiveCard
 import com.example.ui.composable.NewsHiveScaffold
@@ -54,6 +61,8 @@ fun SearchScreen(
     navController: NavController
 ) {
     val state by viewModel.state.collectAsState()
+    val color = MaterialTheme.customColors()
+    val fontStyle=MaterialTheme.typography
     CollectUiEffect(viewModel.effect) { searchUiEffect ->
         when (searchUiEffect) {
             is SearchUiEffect.NavigateToDetails -> {
@@ -63,9 +72,36 @@ fun SearchScreen(
             }
         }
     }
+    AnimatedVisibility(visible = state.error != null) {
+        val composition by rememberLottieComposition(
+            LottieCompositionSpec.RawRes(R.raw.no_wifi)
+        )
+        val progress by animateLottieCompositionAsState(
+            composition,
+            iterations = LottieConstants.IterateForever,
+            restartOnPlay = true
+        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            LottieAnimation(
+                composition = composition,
+                progress = { progress })
+            TextButton(onClick = { viewModel.getData() }) {
+                androidx.compose.material.Text(
+                    text = "Refresh", modifier = Modifier,
+                    color = color.onBackground60,
+                    style = fontStyle.titleMedium
+                )
+            }
+        }
 
-    SearchContent(state, viewModel)
-
+    }
+    AnimatedVisibility(visible = state.error == null) {
+        SearchContent(state, viewModel)
+    }
 }
 
 @SuppressLint("StateFlowValueCalledInComposition")

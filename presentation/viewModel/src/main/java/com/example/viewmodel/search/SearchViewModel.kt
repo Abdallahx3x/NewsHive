@@ -22,6 +22,9 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel<SearchUiState, SearchUiEffect>(SearchUiState()), SearchInteraction {
 
     init {
+        getData()
+    }
+    fun getData(){
         collectFlow(state.value.query.debounce(1_000).distinctUntilChanged()) {
             tryToExecute(
                 call = { manageSearchNewsUseCase.getSearchNews(it) },
@@ -30,7 +33,6 @@ class SearchViewModel @Inject constructor(
             )
             this
         }
-
     }
 
     private fun onSearchQuerySuccess(list: List<NewsItemEntity>) {
