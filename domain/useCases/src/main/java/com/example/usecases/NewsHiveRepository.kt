@@ -18,8 +18,14 @@ interface NewsHiveRepository {
     ): List<NewsItemEntity>?
 
     suspend fun saveNewsForLater(newsItemEntity: NewsItemEntity)
+
     suspend fun getSavedNews(): Flow<List<NewsItemEntity>>
 
     suspend fun deleteSavedNews(title: String)
 
+    suspend fun searchNews(
+        keyword: String,
+        language: String,
+        sort: String
+    ): List<NewsItemEntity>
 }

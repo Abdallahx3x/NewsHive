@@ -26,5 +26,13 @@ class NewsHiveRetrofitDataSource @Inject constructor(
             newsHiveService.getCategoryNews(categoryName, countries, language, sort)
         }
     }
+
+    override suspend fun searchNews(
+        keyword: String,
+        language: String,
+        sort: String
+    ): NewsResponseDto {
+        return wrapApiCall { newsHiveService.searchNews(keyword, language, sort) }
+    }
 }
 

@@ -21,7 +21,8 @@ fun NewsHiveApp() {
     val shouldShowBottomNavigation = when (currentRoute(navController)) {
         BottomNavigationItem.Home.screenRoute,
         BottomNavigationItem.Discover.screenRoute,
-        BottomNavigationItem.Saved.screenRoute
+        BottomNavigationItem.Saved.screenRoute,
+        BottomNavigationItem.Search.screenRoute
         -> true
 
         else -> false

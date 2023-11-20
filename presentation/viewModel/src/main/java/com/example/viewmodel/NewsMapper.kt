@@ -11,6 +11,7 @@ import com.example.viewmodel.discover.CategoryNewsUiState
 import com.example.viewmodel.favourites.FavouritesItemUiState
 import com.example.viewmodel.home.BreakingNewsUiState
 import com.example.viewmodel.home.RecommendedNewsUiState
+import com.example.viewmodel.search.SearchItemUiState
 import java.text.SimpleDateFormat
 import java.util.Base64
 import java.util.Date
@@ -124,3 +125,18 @@ fun DetailsUiState.toNewsItemEntity(): NewsItemEntity {
     )
 }
 
+
+fun NewsItemEntity.toSearchNewsUiState(): SearchItemUiState {
+    val publishedTimeString = dateFormat.format(this.publishedTime)
+    return SearchItemUiState(
+        title = this.news.title,
+        imageUrl = this.news.imageUrl,
+        content = this.news.content,
+        category = this.news.category,
+        url = this.news.url,
+        publishedAt = publishedTimeString
+    )
+}
+
+fun List<NewsItemEntity>.toSearchNewsUiState(): List<SearchItemUiState> =
+    this.map { it.toSearchNewsUiState() }

@@ -7,6 +7,7 @@ import com.example.ui.screens.details.detailsRoute
 import com.example.ui.screens.discover.discoverRoute
 import com.example.ui.screens.favourites.favouriteRoute
 import com.example.ui.screens.home.homeRoute
+import com.example.ui.screens.search.searchRoute
 
 
 @Composable
@@ -15,6 +16,7 @@ fun NewsHiveNavGraph(navController: NavHostController) {
         homeRoute(navController)
         discoverRoute(navController)
         favouriteRoute(navController)
+        searchRoute(navController)
         detailsRoute(navController)
     }
 }

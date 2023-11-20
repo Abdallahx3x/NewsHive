@@ -45,7 +45,15 @@ class NewsHiveRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteSavedNews(title: String) {
-        return localDataStore.deleteSavedNewsByTitle(title)
+        localDataStore.deleteSavedNewsByTitle(title)
     }
 
+    override suspend fun searchNews(
+        keyword: String,
+        language: String,
+        sort: String
+    ): List<NewsItemEntity> {
+        return remoteDataStore
+            .searchNews(keyword, language, sort).data?.map { it.toNewsItemEntity() }?: emptyList()
+    }
 }
