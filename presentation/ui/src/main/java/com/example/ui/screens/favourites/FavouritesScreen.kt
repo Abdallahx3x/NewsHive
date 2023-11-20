@@ -161,6 +161,6 @@ fun FavouritesContent(
 
 @Composable
 @Preview()
-fun HomeScreenPreview() {
+fun FavouritesScreenPreview() {
     FavouritesScreen(navController = rememberNavController())
 }

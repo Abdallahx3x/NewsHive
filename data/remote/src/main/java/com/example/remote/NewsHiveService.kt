@@ -13,7 +13,6 @@ interface NewsHiveService {
         @Query("languages") languages: String
     ): Response<NewsResponseDto>
 
-
     @GET("news")
     suspend fun getCategoryNews(
         @Query("categories") categoryName: String,
@@ -21,4 +20,12 @@ interface NewsHiveService {
         @Query("languages") languages: String,
         @Query("sort") sort: String
     ): Response<NewsResponseDto>
+
+    @GET("news")
+    suspend fun searchNews(
+        @Query("keywords") keyword: String,
+        @Query("languages") languages: String,
+        @Query("sort") sort: String
+    ): Response<NewsResponseDto>
+
 }
