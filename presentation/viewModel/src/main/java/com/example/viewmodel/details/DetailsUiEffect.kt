@@ -1,3 +1,7 @@
 package com.example.viewmodel.details
 
-sealed interface DetailsUiEffect
+import com.example.viewmodel.base.BaseViewModel
+
+sealed interface DetailsUiEffect:BaseViewModel.BaseUiEffect  {
+    object NavigateBack : DetailsUiEffect
+}
