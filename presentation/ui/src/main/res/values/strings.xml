@@ -2,4 +2,7 @@
     <string name="app_name">NewsHive</string>
     <string name="sports">sports</string>
     <string name="newshive">NewsHive</string>
+    <string name="swipe_to_see_more">Swipe to see more</string>
+    <string name="about">About</string>
+    <string name="read_more">Read more</string>
 </resources>

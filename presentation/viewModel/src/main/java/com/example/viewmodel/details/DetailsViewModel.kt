@@ -50,6 +50,10 @@ class DetailsViewModel @Inject constructor(
         )
     }
 
+    override fun onClickBackButton() {
+        sendUiEffect(DetailsUiEffect.NavigateBack)
+    }
+
     private fun onSaveNewsSuccess(detailsUiState: DetailsUiState) {
         _state.update { it.copy(changeSavedIconColor = !detailsUiState.changeSavedIconColor) }
     }

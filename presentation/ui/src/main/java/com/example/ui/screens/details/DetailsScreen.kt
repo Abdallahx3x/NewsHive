@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,11 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.ui.screens.details.composable.BlurredImageDetails
 import com.example.ui.screens.details.composable.BottomSheetContent
-import com.example.ui.screens.details.composable.DetailsImageContent
 import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
+import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.details.DetailsInteraction
+import com.example.viewmodel.details.DetailsUiEffect
 import com.example.viewmodel.details.DetailsUiState
 import com.example.viewmodel.details.DetailsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -39,28 +40,34 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun DetailsScreen(viewModel: DetailsViewModel = hiltViewModel(), navController: NavController) {
+fun DetailsScreen(
+    viewModel: DetailsViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val state by viewModel.state.collectAsState()
-    DetailsContent(state, viewModel, navController)
+    CollectUiEffect(effect = viewModel.effect) { detailsUiEffect ->
+        when (detailsUiEffect) {
+            is DetailsUiEffect.NavigateBack -> navController.popBackStack()
+        }
+    }
+    DetailsContent(state = state, detailsInteraction = viewModel)
 }
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsContent(
     state: DetailsUiState,
     detailsInteraction: DetailsInteraction,
-    navController: NavController
 ) {
+    val systemUiController = rememberSystemUiController()
     val color = MaterialTheme.customColors()
     var offsetY by remember { mutableStateOf(0f) }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
-    val density = LocalDensity.current
-    val configuration = LocalConfiguration.current
-    val screenHeight = with(density) { configuration.screenHeightDp.dp.toPx() }
-    val systemUiController = rememberSystemUiController()
+    val screenHeight =
+        with(LocalDensity.current) { LocalConfiguration.current.screenHeightDp.dp.toPx() }
 
     BottomSheetScaffold(
         modifier = Modifier.fillMaxSize(),
@@ -72,42 +79,39 @@ fun DetailsContent(
         sheetContainerColor = color.card,
         sheetPeekHeight = 0.dp
     ) {
-        Scaffold {
-            systemUiController.setSystemBarsColor(Color.Black, darkIcons = false)
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .pointerInput(Unit) {
-                    detectDragGestures { change, dragAmount ->
-                        change.consume()
-                        when {
-                            dragAmount.y > 0 -> {
-                                scope.launch {
-                                    if (bottomSheetScaffoldState.bottomSheetState.hasExpandedState) {
-                                        bottomSheetScaffoldState.bottomSheetState.partialExpand()
-                                    }
-                                }
+        systemUiController.setSystemBarsColor(Color.Black, darkIcons = false)
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectDragGestures { change, dragAmount ->
+                    change.consume()
+                    when {
+                        dragAmount.y > 0 -> {
+                            scope.launch {
+                                bottomSheetScaffoldState.bottomSheetState.partialExpand()
                             }
+                        }
 
-                            dragAmount.y < 0 -> {
-                                scope.launch {
-                                    if (bottomSheetScaffoldState.bottomSheetState.hasPartiallyExpandedState) {
-                                        bottomSheetScaffoldState.bottomSheetState.expand()
-                                    }
-                                }
+                        dragAmount.y < 0 -> {
+                            scope.launch {
+                                bottomSheetScaffoldState.bottomSheetState.expand()
                             }
-                        }
-                        offsetY += dragAmount.y
-                        if (offsetY > screenHeight) {
-                            offsetY = screenHeight
-                        }
-                        if (offsetY < 0) {
-                            offsetY = 0F
                         }
                     }
-                }) {
-                DetailsImageContent(state, detailsInteraction, navController)
-            }
+                    offsetY += dragAmount.y
+                    if (offsetY > screenHeight) {
+                        offsetY = screenHeight
+                    }
+                    if (offsetY < 0) {
+                        offsetY = 0F
+                    }
+                }
+            }) {
+
+            BlurredImageDetails(state, detailsInteraction)
         }
+
+
     }
 }
 
