@@ -1,6 +1,7 @@
 package com.example.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -27,9 +28,6 @@ fun NewsHiveApp() {
 
         else -> false
     }
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(Color.White, darkIcons = true)
-
     Scaffold(bottomBar = { if (shouldShowBottomNavigation) BottomNavigation(navController = navController) }) { paddingValue ->
         Box(modifier = Modifier.padding(paddingValue)) {
             NewsHiveNavGraph(navController = navController)

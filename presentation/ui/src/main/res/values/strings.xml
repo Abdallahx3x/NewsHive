@@ -5,4 +5,10 @@
     <string name="swipe_to_see_more">Swipe to see more</string>
     <string name="about">About</string>
     <string name="read_more">Read more</string>
+    <string name="breaking_news">Breaking News</string>
+    <string name="refresh">Refresh</string>
+    <string name="recommended">Recommended</string>
+    <string name="view_all">View All</string>
+    <string name="favourites">Favourites</string>
+    <string name="search">Search</string>
 </resources>

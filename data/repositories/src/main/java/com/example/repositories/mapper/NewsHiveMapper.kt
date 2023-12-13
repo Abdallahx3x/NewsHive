@@ -7,6 +7,7 @@ import com.example.repositories.local.NewsLocalDto
 import com.example.repositories.remote.DataDto
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 fun DataDto?.toNewsEntity(): NewsEntity {
@@ -34,18 +35,26 @@ fun DataDto?.toNewsItemEntity(): NewsItemEntity {
 
 
 fun NewsItemEntity.toNewsLocalDto(): NewsLocalDto {
+    val publishedTimeString =
+        SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(this.publishedTime)
     return NewsLocalDto(
         title = news.title,
         content = news.content,
         url = news.url,
         imageUrl = news.imageUrl,
-        publishedAt = "",
+        publishedAt = publishedTimeString,
         category = news.category
     )
 }
 
 
+@SuppressLint("SimpleDateFormat")
 fun NewsLocalDto.toNewsItemEntity(): NewsItemEntity {
+    val publishedTime = try {
+        SimpleDateFormat("yyyy-MM-dd").parse(this.publishedAt)
+    } catch (e: Exception) {
+        Date()
+    }
     return NewsItemEntity(
         news = NewsEntity(
             title = title,
@@ -54,7 +63,9 @@ fun NewsLocalDto.toNewsItemEntity(): NewsItemEntity {
             imageUrl = imageUrl,
             category = category
         ),
-        publishedTime = Date()
+        publishedTime = publishedTime
     )
 }
-fun List<NewsLocalDto>.toNewsItemEntities():List<NewsItemEntity> = this.map { it.toNewsItemEntity() }
+
+fun List<NewsLocalDto>.toNewsItemEntities(): List<NewsItemEntity> =
+    this.map { it.toNewsItemEntity() }
