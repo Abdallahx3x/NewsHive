@@ -10,6 +10,7 @@ import com.example.viewmodel.encode
 import com.example.viewmodel.toSearchNewsUiState
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -22,10 +23,13 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel<SearchUiState, SearchUiEffect>(SearchUiState()), SearchInteraction {
 
     init {
-        getData()
+        onRefreshData()
     }
-    fun getData(){
+
+    @OptIn(FlowPreview::class)
+    private fun getData() {
         collectFlow(state.value.query.debounce(1_000).distinctUntilChanged()) {
+            _state.update { it.copy(isLoading = true, error = null, empty = false) }
             tryToExecute(
                 call = { manageSearchNewsUseCase.getSearchNews(it) },
                 onSuccess = { onSearchQuerySuccess(it) },
@@ -35,10 +39,21 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    override fun onRefreshData() {
+        getData()
+    }
+
     private fun onSearchQuerySuccess(list: List<NewsItemEntity>) {
-        _state.update {
-            it.copy(searchItems = list.filter { it.news.imageUrl.isNotEmpty() }
-                .toSearchNewsUiState())
+        if (list.isNotEmpty()) {
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    searchItems = list.filter { newsItem -> newsItem.news.imageUrl.isNotEmpty() }
+                        .toSearchNewsUiState()
+                )
+            }
+        } else {
+            _state.update { it.copy(isLoading = false, empty = true) }
         }
     }
 
@@ -52,6 +67,7 @@ class SearchViewModel @Inject constructor(
         val json = gson.toJson(searchItemUiState.encode())
         sendUiEffect(SearchUiEffect.NavigateToDetails(json))
     }
+
 
     private fun onError(throwable: Throwable) {
         _state.update { it.copy(isLoading = false, error = throwable.message) }
