@@ -20,10 +20,10 @@ class HomeViewModel @Inject constructor(
     private val getRecommendationNewsUseCase: GetRecommendationNewsUseCase
 ) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()), HomeInteraction {
     init {
-        getData()
+        onRefreshData()
     }
 
-    fun getData() {
+    override fun onRefreshData() {
         getBreakingNews()
         getRecommendationNews()
     }
@@ -49,7 +49,9 @@ class HomeViewModel @Inject constructor(
 
     private fun getBreakingNews() {
         _state.update { it.copy(isLoading = true, error = null) }
-        tryToExecute(call = { getBreakingNewsUseCase.invoke()?.filter { it.news.imageUrl.isNotEmpty() } },
+        tryToExecute(call = {
+            getBreakingNewsUseCase.invoke()?.filter { it.news.imageUrl.isNotEmpty() }
+        },
             onSuccess = { newList ->
                 newList?.let { onGetBreakingNewsSuccess(it) }
             },
@@ -63,13 +65,17 @@ class HomeViewModel @Inject constructor(
         _state.update {
             it.copy(
                 isLoading = false,
-                breakingNewsUiState = news.toBreakingNewsUiState()
+                breakingNewsUiState = news.filter { newsItem -> newsItem.news.imageUrl.isNotEmpty() }
+                    .toBreakingNewsUiState()
             )
         }
     }
 
     private fun getRecommendationNews() {
-        tryToExecute(call = { getRecommendationNewsUseCase.invoke()?.filter { it.news.imageUrl.isNotEmpty() } },
+        _state.update { it.copy(isLoading = true, error = null) }
+        tryToExecute(call = {
+            getRecommendationNewsUseCase.invoke()
+        },
             onSuccess = { newList ->
                 newList?.let { onGetRecommendationNews(newList) }
             },
@@ -80,9 +86,15 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onGetRecommendationNews(news: List<NewsItemEntity>) {
-        _state.update { it.copy(recommendedNewsUiState = news.toRecommendedNewsUiState()) }
-    }
+        _state.update {
+            it.copy(
+                isLoading = false,
+                recommendedNewsUiState = news.filter { newsItem -> newsItem.news.imageUrl.isNotEmpty() }
+                    .toRecommendedNewsUiState()
 
+            )
+        }
+    }
 
     private fun onError(throwable: Throwable) {
         _state.update { it.copy(isLoading = false, error = throwable.message) }

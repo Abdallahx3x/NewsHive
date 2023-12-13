@@ -6,6 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.ui.theme.customColors
@@ -13,21 +15,20 @@ import com.example.ui.theme.customColors
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsHiveTopAppBar(
-    title: String
+    modifier: Modifier = Modifier,
+    title: @Composable () -> Unit,
+    navigationIcon: @Composable () -> Unit,
+    containerColor: Color,
+    titleContentColor: Color,
 ) {
     CenterAlignedTopAppBar(
+        modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.customColors().card,
-            titleContentColor = MaterialTheme.customColors().primary,
+            containerColor = containerColor,
+            titleContentColor = titleContentColor,
         ),
-        title = {
-            Text(
-                text = title,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                style = MaterialTheme.typography.titleLarge,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
+        title = { title() },
+        navigationIcon = { navigationIcon() }
     )
 }
+
