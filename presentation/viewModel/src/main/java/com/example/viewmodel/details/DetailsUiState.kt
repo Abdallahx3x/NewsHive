@@ -7,6 +7,7 @@ data class DetailsUiState(
     override val imageUrl: String = "",
     override val content: String = "",
     override val url: String = "",
+    override val publishedAt: String = "",
     val changeSavedIconColor: Boolean = false,
     val error: String? = null
 ) : BaseUiState()

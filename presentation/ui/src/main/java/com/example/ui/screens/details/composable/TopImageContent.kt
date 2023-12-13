@@ -43,7 +43,7 @@ fun TopImageContent(
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
-        GradientBackgroundBox(gradientStartY = 0f, gradientEndY = 230f)
+        GradientBackgroundBox(gradientStartY = 0f, gradientEndY = 220f)
         Row(
             modifier = Modifier
                 .fillMaxWidth()

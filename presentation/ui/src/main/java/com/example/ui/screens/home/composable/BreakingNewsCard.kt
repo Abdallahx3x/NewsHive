@@ -31,6 +31,7 @@ import com.example.ui.theme.customColors
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BreakingNewsCard(
+    modifier: Modifier,
     title: String?,
     painter: Painter,
     onClick: () -> Unit,
@@ -40,17 +41,17 @@ fun BreakingNewsCard(
     val fontStyle = MaterialTheme.typography
 
     Card(
-        modifier = Modifier
-            .size(width = 280.dp, height = 200.dp)
-            .padding(horizontal = 16.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(5.dp),
         onClick = { onClick() }
     ) {
         Box {
-            CircularProgressIndicator(modifier = Modifier
-                .size(24.dp)
-                .align(Alignment.Center))
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.Center)
+            )
             Image(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -77,7 +78,7 @@ fun BreakingNewsCard(
                     .padding(horizontal = 16.dp),
                 text = title ?: "",
                 color = Color.White,
-                style = fontStyle.bodyLarge,
+                style = fontStyle.titleMedium,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -90,6 +91,7 @@ fun BreakingNewsCard(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 fun BreakingNewsCardPreview() {
     BreakingNewsCard(
+        Modifier,
         "moo salah score a wonderful goal", rememberAsyncImagePainter(
             model = "https://egyptianstreets.com/wp-content/uploads/2022/10/GettyImages-1243921482.v1.jpg"
         ), {}

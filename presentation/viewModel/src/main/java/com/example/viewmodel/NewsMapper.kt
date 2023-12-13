@@ -72,7 +72,8 @@ fun BaseUiState.encode(): BaseUiState {
         title = title.encodeBase64(),
         content = content.encodeBase64(),
         imageUrl = imageUrl.encodeBase64(),
-        url = url.encodeBase64()
+        url = url.encodeBase64(),
+        publishedAt = publishedAt.encodeBase64()
     )
 }
 
@@ -82,7 +83,8 @@ fun BaseUiState.decode(): BaseUiState {
         title = title.decodeBase64(),
         content = content.decodeBase64(),
         imageUrl = imageUrl.decodeBase64(),
-        url = url.decodeBase64()
+        url = url.decodeBase64(),
+        publishedAt = publishedAt.decodeBase64()
     )
 }
 
@@ -96,7 +98,6 @@ private fun String.encodeBase64(): String {
 private fun String.decodeBase64(): String {
     return String(Base64.getUrlDecoder().decode(this))
 }
-
 
 
 fun NewsItemEntity.toFavouritesNewsUiState(): FavouritesItemUiState {
@@ -114,14 +115,20 @@ fun NewsItemEntity.toFavouritesNewsUiState(): FavouritesItemUiState {
 fun List<NewsItemEntity>.toFavouritesNewsUiState(): List<FavouritesItemUiState> =
     this.map { it.toFavouritesNewsUiState() }
 
+@SuppressLint("SimpleDateFormat")
 fun DetailsUiState.toNewsItemEntity(): NewsItemEntity {
+    val publishedTime = try {
+        SimpleDateFormat("yyyy-MM-dd").parse(this.publishedAt)
+    } catch (e: Exception) {
+        Date()
+    }
     return NewsItemEntity(
         news = NewsEntity( title = this.title,
             imageUrl = this.imageUrl,
             content = this.content,
             category ="",
             url = this.url,),
-        publishedTime = Date()
+        publishedTime = publishedTime
     )
 }
 

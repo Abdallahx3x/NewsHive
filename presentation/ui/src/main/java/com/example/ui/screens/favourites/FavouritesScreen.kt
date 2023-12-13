@@ -1,10 +1,10 @@
 package com.example.ui.screens.favourites
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,24 +16,24 @@ import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.ui.R
+import com.example.ui.composable.AnimatedStateHandler
 import com.example.ui.composable.NewsHiveCard
 import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
@@ -44,6 +44,9 @@ import com.example.viewmodel.favourites.FavouritesInteraction
 import com.example.viewmodel.favourites.FavouritesUiEffect
 import com.example.viewmodel.favourites.FavouritesUiState
 import com.example.viewmodel.favourites.FavouritesViewModel
+import com.example.viewmodel.favourites.showContent
+import com.example.viewmodel.favourites.showEmpty
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
@@ -61,9 +64,7 @@ fun FavouritesScreen(
             }
         }
     }
-
     FavouritesContent(state, viewModel)
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,39 +73,39 @@ fun FavouritesContent(
     state: FavouritesUiState,
     favouritesInteraction: FavouritesInteraction
 ) {
-    val color = MaterialTheme.customColors()
+    val systemUiController = rememberSystemUiController()
+    val darkMode = isSystemInDarkTheme()
+    systemUiController.setSystemBarsColor(
+        color = MaterialTheme.customColors().card,
+        darkIcons = !darkMode
+    )
     NewsHiveScaffold(
-        hasTitle = true,
-        title = "Favourites"
+        hasAppBar = true,
+        title = {
+            Text(
+                text = stringResource(R.string.favourites),
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                style = MaterialTheme.typography.titleLarge,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        showEmpty = state.showEmpty(),
+        onEmpty = {
+            AnimatedStateHandler(animationResId = R.raw.empty)
+        },
+        showContent = state.showContent()
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(color.background)
+                .background(MaterialTheme.customColors().background)
         ) {
-            AnimatedVisibility(state.favouritesItemUiState.isEmpty()) {
-                val composition by rememberLottieComposition(
-                    LottieCompositionSpec.RawRes(R.raw.empty)
-                )
-                val progress by animateLottieCompositionAsState(
-                    composition,
-                    iterations = LottieConstants.IterateForever,
-                    restartOnPlay = true
-                )
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    LottieAnimation(
-                        composition = composition,
-                        progress = { progress })
-                }
-            }
-
-
-            LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
+            LazyColumn(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                contentPadding = PaddingValues(top = 16.dp)
+            ) {
                 items(state.favouritesItemUiState, key = { it.title }) { card ->
                     val dismissState = rememberDismissState(
                         confirmValueChange = {
@@ -113,7 +114,6 @@ fun FavouritesContent(
                                 DismissValue.DismissedToStart -> false
                                 DismissValue.DismissedToEnd -> {
                                     favouritesInteraction.onDismissNews(card.title)
-
                                     true
                                 }
                             }
@@ -134,7 +134,6 @@ fun FavouritesContent(
                                         .size(24.dp)
                                         .align(Alignment.CenterStart)
                                 )
-
                                 NewsHiveCard(
                                     modifier = Modifier.padding(bottom = 16.dp),
                                     onClick = { favouritesInteraction.onClickFavouriteItem(card) },
@@ -143,20 +142,13 @@ fun FavouritesContent(
                                     title = card.title,
                                     date = card.publishedAt
                                 )
-
                             }
                         }, directions = setOf(DismissDirection.StartToEnd)
                     )
-
-
                 }
             }
-
-
         }
-
     }
-
 }
 
 @Composable

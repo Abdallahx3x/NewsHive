@@ -36,6 +36,7 @@ class DetailsViewModel @Inject constructor(
                 content = decodeNewsItem.content,
                 imageUrl = decodeNewsItem.imageUrl,
                 url = decodeNewsItem.url,
+                publishedAt = decodeNewsItem.publishedAt
             )
         }
     }

@@ -23,6 +23,11 @@ data class RecommendedNewsUiState(
     override val content: String = "",
     override val imageUrl: String = "",
     override val url: String = "",
-    val category: String = "",
-    val publishedAt: String = ""
+    override val publishedAt: String = "",
+    val category: String = ""
 ) : BaseUiState()
+
+fun HomeUiState.showError() = !isLoading && error != null
+fun HomeUiState.showLoading() = isLoading && error == null
+fun HomeUiState.showContent() = !isLoading && error == null
+

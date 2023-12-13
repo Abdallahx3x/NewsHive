@@ -18,6 +18,25 @@ class DiscoverViewModel @Inject constructor(
 ) : BaseViewModel<DiscoverUiState, DiscoverUiEffect>(DiscoverUiState()), DiscoverInteraction {
 
     init {
+        onRefreshData()
+    }
+
+    private fun fetchCategoryNews() {
+        _state.update { it.copy(isLoading = true, error = null) }
+        state.value.categories.forEach { category ->
+            tryToExecute(
+                call = {
+                    getCategoryNewsUseCase.getLastCategoryNews(category)
+                },
+                onSuccess = { newList ->
+                    newList?.let { updateUiStateForCategory(category, newList) }
+                },
+                onError = { throwable -> onError(throwable) }
+            )
+        }
+    }
+
+    override fun onRefreshData() {
         fetchCategoryNews()
     }
 
@@ -28,40 +47,19 @@ class DiscoverViewModel @Inject constructor(
         sendUiEffect(DiscoverUiEffect.NavigateToDetails(json))
     }
 
-    override fun updatePageIndex(pageIndex: Int) {
-        _state.update { it.copy(pageIndex = pageIndex) }
-    }
-
-     fun fetchCategoryNews() {
-        _state.update { it.copy(isLoading = true, error = null) }
-        state.value.categories.forEach { category ->
-            tryToExecute(
-                call = {
-                    getCategoryNewsUseCase.getLastCategoryNews(category)?.filter { it.news.imageUrl.isNotEmpty() }
-                },
-                onSuccess = { newList ->
-                    newList?.let { updateUiStateForCategory(category, it) }
-                },
-                onError = { throwable ->
-                    onError(throwable)
-                }
-            )
-        }
-    }
-
     private fun updateUiStateForCategory(category: String, newsList: List<NewsItemEntity>) {
         _state.update { it.copy(isLoading = false, error = null) }
+        val list = newsList.filter { it.news.imageUrl.isNotEmpty() }.toCategoryNewsUiState()
         when (category) {
-            "sports" -> _state.update { it.copy(sportsNews = newsList.toCategoryNewsUiState()) }
-            "science" -> _state.update { it.copy(scienceNews = newsList.toCategoryNewsUiState()) }
-            "health" -> _state.update { it.copy(healthNews = newsList.toCategoryNewsUiState()) }
-            "technology" -> _state.update { it.copy(technologyNews = newsList.toCategoryNewsUiState()) }
-            "business" -> _state.update { it.copy(businessNews = newsList.toCategoryNewsUiState()) }
+            "sports" -> _state.update { it.copy(sportsNews = list) }
+            "science" -> _state.update { it.copy(scienceNews = list) }
+            "health" -> _state.update { it.copy(healthNews = list) }
+            "technology" -> _state.update { it.copy(technologyNews = list) }
+            "business" -> _state.update { it.copy(businessNews = list) }
         }
     }
 
     private fun onError(throwable: Throwable) {
         _state.update { it.copy(isLoading = false, error = throwable.message) }
     }
-
 }
