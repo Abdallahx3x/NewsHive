@@ -49,7 +49,7 @@ fun DiscoverCard(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
+            .height(320.dp)
             .padding(horizontal = 16.dp)
             .padding(top = 16.dp),
         colors = CardDefaults.cardColors(color.card)
@@ -85,14 +85,16 @@ fun DiscoverCard(
                 style = fontStyle.titleSmall
             )
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp), text = title,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = title,
                 color = color.onBackground87,
                 style = fontStyle.titleMedium,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp), text = date,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = date,
                 color = color.onBackground60,
                 style = fontStyle.titleSmall
             )
