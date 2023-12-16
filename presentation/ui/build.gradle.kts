@@ -63,6 +63,7 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeUtil)
     implementation(Dependencies.lifecycleViewModel)
+    implementation(Dependencies.splashScreen)
     ksp(Dependencies.hiltCompiler)
 
     testImplementation(Dependencies.junit)
