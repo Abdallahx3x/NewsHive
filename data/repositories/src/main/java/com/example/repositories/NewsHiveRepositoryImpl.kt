@@ -1,10 +1,16 @@
 package com.example.repositories
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.entities.news.NewsItemEntity
 import com.example.repositories.local.LocalDataStore
 import com.example.repositories.mapper.toNewsItemEntities
 import com.example.repositories.mapper.toNewsItemEntity
 import com.example.repositories.mapper.toNewsLocalDto
+import com.example.repositories.paging.CategoryNewsPagingSource
+import com.example.repositories.paging.LatestNewsPagingSource
+import com.example.repositories.paging.SearchNewsPagingSource
 import com.example.repositories.remote.RemoteDataStore
 import com.example.usecases.NewsHiveRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,25 +21,27 @@ class NewsHiveRepositoryImpl @Inject constructor(
     private val remoteDataStore: RemoteDataStore,
     private val localDataStore: LocalDataStore
 ) : NewsHiveRepository {
-    override suspend fun getLatestNews(
+    override suspend fun getAllLatestNews(
         sort: String,
-        countries: String,
         language: String
-    ): List<NewsItemEntity>? {
-        return remoteDataStore.getLatestNews(
-            sort, countries, language
-        ).data?.map { it.toNewsItemEntity() }
+    ): Flow<PagingData<NewsItemEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = { LatestNewsPagingSource(remoteDataStore, sort, language) }
+        ).flow
     }
 
     override suspend fun getCategoryNews(
         categoryName: String,
         sort: String,
-        countries: String,
         language: String
-    ): List<NewsItemEntity>? {
-        return remoteDataStore.getCategoryNews(
-            categoryName, sort, countries, language
-        ).data?.map { it.toNewsItemEntity() }
+    ): Flow<PagingData<NewsItemEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = {
+                CategoryNewsPagingSource(remoteDataStore, categoryName, sort, language)
+            }
+        ).flow
     }
 
     override suspend fun saveNewsForLater(newsItemEntity: NewsItemEntity) {
@@ -52,8 +60,38 @@ class NewsHiveRepositoryImpl @Inject constructor(
         keyword: String,
         language: String,
         sort: String
-    ): List<NewsItemEntity> {
-        return remoteDataStore
-            .searchNews(keyword, language, sort).data?.map { it.toNewsItemEntity() }?: emptyList()
+    ): Flow<PagingData<NewsItemEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = {
+                SearchNewsPagingSource(remoteDataStore, keyword, language, sort)
+            }
+        ).flow
     }
+
+    override fun getCategoryNewsPaging(
+        categoryName: String,
+        sort: String,
+        language: String
+    ): Flow<PagingData<NewsItemEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = {
+                CategoryNewsPagingSource(remoteDataStore, categoryName, sort, language)
+            }
+        ).flow
+    }
+
+    override suspend fun getLatestNews(sort: String, language: String): List<NewsItemEntity> {
+        return remoteDataStore.getLatestNews(
+            sort = sort,
+            language = language,
+            offset = 0
+        ).data?.map { it.toNewsItemEntity() } ?: emptyList()
+    }
+
+    companion object {
+        const val PAGE_SIZE = 5
+    }
+
 }
