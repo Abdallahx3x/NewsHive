@@ -15,7 +15,7 @@ object Dependencies {
     private const val SPLASH_SCREEN_VERSION = "1.0.0"
     private const val ACTIVITY_COMPOSE = "1.5.1"
     private const val COMPOSE_BOM = "2022.10.00"
-    private const val NAVIGATION_COMPOSE = "2.5.3"
+    private const val NAVIGATION_COMPOSE = "2.6.0"
     private const val HILT_NAVIGATION_VERSION = "1.0.0"
     private const val MATERIAL3_VERSION = "1.1.0-beta01"
     private const val COMPOSE_FOUNDATION_VERSION = "1.4.3"
@@ -23,6 +23,8 @@ object Dependencies {
     private const val ACCOMPANIST_PAGER = "0.27.1"
     private const val GSON_VERSION = "2.9.0"
     private const val APACHE_TEXT_VERSION = "1.9"
+    private const val PAGING_VERSION = "3.2.0"
+    private const val PAGING_COMPOSE_VERSION = "3.2.0"
 
 
     const val androidxCore = "androidx.core:core-ktx:$CORE_VERSION"
@@ -77,4 +79,9 @@ object Dependencies {
 
     const val systemUiController =
         "com.google.accompanist:accompanist-systemuicontroller:$SYSTEM_UI_CONTROLLER_VERSION"
+
+    const val paging = "androidx.paging:paging-common-ktx:$PAGING_VERSION"
+    const val pagingCompose = "androidx.paging:paging-compose:$PAGING_COMPOSE_VERSION"
+    val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
+
 }
