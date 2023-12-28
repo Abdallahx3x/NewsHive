@@ -4,29 +4,26 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.ui.R
 import com.example.ui.composable.AnimatedStateHandler
-import com.example.ui.composable.NewsHiveCard
 import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
+import com.example.ui.screens.search.composable.SearchResults
 import com.example.ui.screens.search.composable.SearchTextField
 import com.example.ui.theme.customColors
 import com.example.ui.util.CollectUiEffect
@@ -35,7 +32,6 @@ import com.example.viewmodel.search.SearchUiEffect
 import com.example.viewmodel.search.SearchUiState
 import com.example.viewmodel.search.SearchViewModel
 import com.example.viewmodel.search.showContent
-import com.example.viewmodel.search.showEmpty
 import com.example.viewmodel.search.showError
 import com.example.viewmodel.search.showLoading
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -71,6 +67,7 @@ fun SearchContent(
         color = MaterialTheme.customColors().card,
         darkIcons = !darkMode
     )
+    val searchItems = state.searchItems.collectAsLazyPagingItems()
     NewsHiveScaffold(
         hasAppBar = true,
         appBarModifier = Modifier.height(88.dp),
@@ -89,14 +86,6 @@ fun SearchContent(
             )
         },
         showError = state.showError(),
-        showEmpty = state.showEmpty(),
-        onEmpty = {
-            AnimatedStateHandler(
-                modifier = Modifier.size(300.dp),
-                animationResId = R.raw.empty_search,
-                animationSpeed = 1.5f
-            )
-        },
         onError = {
             AnimatedStateHandler(
                 hasRefreshButton = true,
@@ -106,38 +95,44 @@ fun SearchContent(
         },
         showContent = state.showContent()
     ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
+        Box(
+            Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.customColors().background)
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp),
-            contentPadding = PaddingValues(top = 16.dp)
         ) {
-            items(state.searchItems) { card ->
-                Box {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(
-                                bottom = 16.dp,
-                                start = 26.dp
-                            )
-                            .size(24.dp)
-                            .align(Alignment.CenterStart)
-                    )
-                    NewsHiveCard(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        onClick = {
-                            searchInteraction.onClickSearchItem(card)
-                        },
-                        painter = rememberAsyncImagePainter(card.imageUrl),
-                        category = card.category,
-                        title = card.title,
-                        date = card.publishedAt
-                    )
+            key(searchItems.loadState) {
+                when {
+                    searchItems.loadState.refresh is LoadState.Error && state.query.value.isNotEmpty() -> {
+                        AnimatedStateHandler(
+                            hasRefreshButton = true,
+                            onRefresh = { searchItems.retry() },
+                            animationResId = R.raw.no_wifi
+                        )
+                    }
+                    searchItems.loadState.refresh is LoadState.Loading && state.query.value.isNotEmpty() -> {
+                        AnimatedStateHandler(
+                            modifier = Modifier.size(200.dp),
+                            animationResId = R.raw.loading_animation,
+                            animationSpeed = 1.7f
+                        )
+                    }
+                    state.query.value.isEmpty() -> {
+                        AnimatedStateHandler(animationResId = R.raw.empty_search)
+                    }
+                    state.query.value.isNotEmpty() -> {
+                        SearchResults(
+                            onClickItem = searchInteraction::onClickSearchItem,
+                            searchItems = searchItems
+                        )
+                    }
                 }
             }
         }
     }
 }
+
+
+
+
 

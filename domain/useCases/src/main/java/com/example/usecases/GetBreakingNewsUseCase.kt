@@ -1,8 +1,5 @@
 package com.example.usecases
 
-import androidx.paging.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 class GetBreakingNewsUseCase @Inject constructor(

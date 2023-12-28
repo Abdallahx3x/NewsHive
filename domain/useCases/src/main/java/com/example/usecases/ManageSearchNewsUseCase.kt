@@ -1,7 +1,6 @@
 package com.example.usecases
 
 import androidx.paging.map
-import com.example.entities.news.NewsItemEntity
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import javax.inject.Inject
 

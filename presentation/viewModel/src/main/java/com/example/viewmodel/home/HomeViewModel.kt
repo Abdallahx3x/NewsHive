@@ -49,49 +49,36 @@ class HomeViewModel @Inject constructor(
 
     private fun getBreakingNews() {
         _state.update { it.copy(isLoading = true, error = null) }
-        tryToExecute(call = {
-            getBreakingNewsUseCase.invoke()?.filter { it.news.imageUrl.isNotEmpty() }
-        },
-            onSuccess = { newList ->
-                newList?.let { onGetBreakingNewsSuccess(it) }
-            },
-            onError = { throwable ->
-                onError(throwable)
-            }
+        tryToExecute(
+            call = getBreakingNewsUseCase::invoke,
+            onSuccess = ::onGetBreakingNewsSuccess,
+            onError = ::onError
         )
     }
 
-    private fun onGetBreakingNewsSuccess(news: List<NewsItemEntity>) {
+    private fun onGetBreakingNewsSuccess(breakingNewsData: List<NewsItemEntity>) {
         _state.update {
             it.copy(
                 isLoading = false,
-                breakingNewsUiState = news.filter { newsItem -> newsItem.news.imageUrl.isNotEmpty() }
-                    .toBreakingNewsUiState()
+                breakingNewsUiState = breakingNewsData.toBreakingNewsUiState()
             )
         }
     }
 
     private fun getRecommendationNews() {
         _state.update { it.copy(isLoading = true, error = null) }
-        tryToExecute(call = {
-            getRecommendationNewsUseCase.invoke()
-        },
-            onSuccess = { newList ->
-                newList?.let { onGetRecommendationNews(newList) }
-            },
-            onError = { throwable ->
-                onError(throwable)
-            }
+        tryToExecute(
+            call = getRecommendationNewsUseCase::invoke,
+            onSuccess = ::onGetRecommendationNews,
+            onError = ::onError
         )
     }
 
-    private fun onGetRecommendationNews(news: List<NewsItemEntity>) {
+    private fun onGetRecommendationNews(recommendationNewsData: List<NewsItemEntity>) {
         _state.update {
             it.copy(
                 isLoading = false,
-                recommendedNewsUiState = news.filter { newsItem -> newsItem.news.imageUrl.isNotEmpty() }
-                    .toRecommendedNewsUiState()
-
+                recommendedNewsUiState = recommendationNewsData.toRecommendedNewsUiState()
             )
         }
     }

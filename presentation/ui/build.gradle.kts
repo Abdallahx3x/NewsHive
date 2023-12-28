@@ -64,6 +64,10 @@ dependencies {
     implementation(Dependencies.composeUtil)
     implementation(Dependencies.lifecycleViewModel)
     implementation(Dependencies.splashScreen)
+    implementation(Dependencies.pagingCompose)
+    implementation(Dependencies.pagingRuntime)
+    implementation(Dependencies.paging)
+
     ksp(Dependencies.hiltCompiler)
 
     testImplementation(Dependencies.junit)

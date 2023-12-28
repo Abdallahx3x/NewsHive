@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
@@ -21,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
 import com.example.ui.composable.AnimatedStateHandler
@@ -143,18 +145,58 @@ fun DiscoverContent(
                 count = state.categoryNews().size,
                 state = pageState
             ) { page ->
+                val list = state.categoryNews()[page].list.collectAsLazyPagingItems()
+                key(list.loadState) {
+                    when {
+                        list.loadState.refresh is LoadState.Error -> {
+                            AnimatedStateHandler(animationResId = R.raw.no_wifi)
+                        }
+                        list.loadState.refresh is LoadState.Loading -> {
+                            AnimatedStateHandler(
+                                modifier = Modifier.size(200.dp),
+                                animationResId = R.raw.loading_animation,
+                                animationSpeed = 1.7f
+                            )
+                        }
+                    }
+                }
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
-                    items(state.categoryNews()[page].list) { item ->
+                    items(list.itemCount) { item ->
                         DiscoverCard(
-                            painter = rememberAsyncImagePainter(model = item.imageUrl),
-                            onClick = { discoverInteraction.onClickCategoryItem(item) },
-                            category = item.categoryName,
-                            title = item.title,
-                            date = item.publishedAt,
+                            painter = rememberAsyncImagePainter(model = list[item]!!.imageUrl),
+                            onClick = { discoverInteraction.onClickCategoryItem(list[item]!!) },
+                            category = list[item]!!.categoryName,
+                            title = list[item]!!.title,
+                            date = list[item]!!.publishedAt,
                         )
+                    }
+                    when {
+                        list.loadState.append is LoadState.Loading -> {
+                            item {
+                                AnimatedStateHandler(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(42.dp),
+                                    animationResId = R.raw.loading_animation
+                                )
+                            }
+                        }
+
+                        list.loadState.append is LoadState.Error -> {
+                            item {
+                                AnimatedStateHandler(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(56.dp),
+                                    hasRefreshButton = true,
+                                    onRefresh = { list.retry() },
+                                    animationResId = R.raw.no_wifi
+                                )
+                            }
+                        }
                     }
                 }
             }
