@@ -83,7 +83,7 @@ fun BreakingNewsCard(
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 12.dp)
                     .padding(horizontal = 16.dp),
-                text = title ?: "",
+                text = title,
                 color = Color.White,
                 style = fontStyle.titleMedium,
                 maxLines = 2,

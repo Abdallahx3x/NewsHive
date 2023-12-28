@@ -25,6 +25,4 @@ data class SearchItemUiState(
 fun SearchUiState.showError() = !isLoading && error != null
 fun SearchUiState.showLoading() = isLoading && error == null
 fun SearchUiState.showContent() = !isLoading && error == null
-fun SearchUiState.showEmpty() = !isLoading && error == null
-
 
