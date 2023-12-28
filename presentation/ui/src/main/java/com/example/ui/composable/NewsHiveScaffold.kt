@@ -2,6 +2,9 @@ package com.example.ui.composable
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -42,10 +45,26 @@ fun NewsHiveScaffold(
             }
         }
     ) { paddingValues ->
-        AnimatedVisibility(visible = showError) { onError() }
-        AnimatedVisibility(visible = showLoading) { onLoading() }
-        AnimatedVisibility(visible = showEmpty) { onEmpty() }
-        AnimatedVisibility(visible = showContent) { content(paddingValues) }
+        AnimatedVisibility(
+            visible = showError,
+            enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+            exit = fadeOut(animationSpec = tween(durationMillis = 500))
+        ) { onError() }
+        AnimatedVisibility(
+            visible = showLoading,
+            enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+            exit = fadeOut(animationSpec = tween(durationMillis = 500))
+        ) { onLoading() }
+        AnimatedVisibility(
+            visible = showEmpty,
+            enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+            exit = fadeOut(animationSpec = tween(durationMillis = 500))
+        ) { onEmpty() }
+        AnimatedVisibility(
+            visible = showContent,
+            enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+            exit = fadeOut(animationSpec = tween(durationMillis = 500))
+        ) { content(paddingValues) }
     }
 }
 

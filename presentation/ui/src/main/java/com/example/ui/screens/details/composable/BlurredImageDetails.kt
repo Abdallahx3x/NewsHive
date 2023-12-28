@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
+import com.example.ui.composable.ActionSnakeBar
 import com.example.ui.composable.GradientBackgroundBox
 import com.example.ui.theme.customColors
 import com.example.viewmodel.details.DetailsInteraction
@@ -37,7 +39,7 @@ fun BlurredImageDetails(
             modifier = Modifier
                 .fillMaxSize()
                 .blur(24.dp),
-            painter =painterResource(id = R.drawable.empty_image),
+            painter = painterResource(id = R.drawable.empty_image),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
@@ -51,8 +53,7 @@ fun BlurredImageDetails(
         )
         GradientBackgroundBox(gradientStartY = 200f, gradientEndY = 0f)
         Column(
-            Modifier
-                .fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
+            Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopImageContent(
                 image = rememberAsyncImagePainter(model = state.imageUrl),
@@ -70,5 +71,10 @@ fun BlurredImageDetails(
             Spacer(modifier = Modifier.weight(1f))
             SwipeToSeeMoreIndicator(color = color.onPrimary, fontStyle = fontStyle.titleSmall)
         }
+        ActionSnakeBar(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            contentMessage = stringResource(R.string.item_saved_successfully),
+            isVisible = state.changeSavedIconColor
+        )
     }
 }

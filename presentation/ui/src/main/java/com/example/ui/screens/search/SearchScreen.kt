@@ -103,29 +103,33 @@ fun SearchContent(
         ) {
             key(searchItems.loadState) {
                 when {
-                    searchItems.loadState.refresh is LoadState.Error && state.query.value.isNotEmpty() -> {
+                    searchItems.loadState.refresh is LoadState.Error && query.value.isNotEmpty() -> {
                         AnimatedStateHandler(
                             hasRefreshButton = true,
                             onRefresh = { searchItems.retry() },
                             animationResId = R.raw.no_wifi
                         )
                     }
-                    searchItems.loadState.refresh is LoadState.Loading && state.query.value.isNotEmpty() -> {
+
+                    searchItems.loadState.refresh is LoadState.Loading && query.value.isNotEmpty() -> {
                         AnimatedStateHandler(
                             modifier = Modifier.size(200.dp),
                             animationResId = R.raw.loading_animation,
                             animationSpeed = 1.7f
                         )
                     }
-                    state.query.value.isEmpty() -> {
-                        AnimatedStateHandler(animationResId = R.raw.empty_search)
-                    }
-                    state.query.value.isNotEmpty() -> {
-                        SearchResults(
-                            onClickItem = searchInteraction::onClickSearchItem,
-                            searchItems = searchItems
-                        )
-                    }
+                }
+            }
+            when {
+                query.value.isEmpty() -> {
+                    AnimatedStateHandler(animationResId = R.raw.empty_search)
+                    searchInteraction.onChangeSearchQuery("")
+                }
+                query.value.isNotEmpty() -> {
+                    SearchResults(
+                        onClickItem = searchInteraction::onClickSearchItem,
+                        searchItems = searchItems
+                    )
                 }
             }
         }

@@ -106,7 +106,7 @@ fun FavouritesContent(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 contentPadding = PaddingValues(top = 16.dp)
             ) {
-                items(state.favouritesItemUiState, key = { it.title }) { card ->
+                items(state.favouriteItemsUiState, key = { it.title }) { card ->
                     val dismissState = rememberDismissState(
                         confirmValueChange = {
                             when (it) {

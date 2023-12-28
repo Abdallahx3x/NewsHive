@@ -3,13 +3,11 @@ package com.example.ui.screens.discover
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
@@ -30,12 +28,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
 import com.example.ui.composable.AnimatedStateHandler
 import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
-import com.example.ui.screens.discover.composable.DiscoverCard
+import com.example.ui.screens.discover.composable.DiscoverResults
 import com.example.ui.screens.discover.composable.TabIndicator
 import com.example.ui.theme.customColors
 import com.example.ui.util.CollectUiEffect
@@ -147,55 +144,26 @@ fun DiscoverContent(
             ) { page ->
                 val list = state.categoryNews()[page].list.collectAsLazyPagingItems()
                 key(list.loadState) {
-                    when {
-                        list.loadState.refresh is LoadState.Error -> {
-                            AnimatedStateHandler(animationResId = R.raw.no_wifi)
+                    when (list.loadState.refresh) {
+                        is LoadState.Error -> {
+                            AnimatedStateHandler(
+                                animationResId = R.raw.no_wifi,
+                                hasRefreshButton = true,
+                                onRefresh = { list.retry() },
+                            )
                         }
-                        list.loadState.refresh is LoadState.Loading -> {
+                        is LoadState.Loading -> {
                             AnimatedStateHandler(
                                 modifier = Modifier.size(200.dp),
                                 animationResId = R.raw.loading_animation,
                                 animationSpeed = 1.7f
                             )
                         }
-                    }
-                }
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(bottom = 16.dp)
-                ) {
-                    items(list.itemCount) { item ->
-                        DiscoverCard(
-                            painter = rememberAsyncImagePainter(model = list[item]!!.imageUrl),
-                            onClick = { discoverInteraction.onClickCategoryItem(list[item]!!) },
-                            category = list[item]!!.categoryName,
-                            title = list[item]!!.title,
-                            date = list[item]!!.publishedAt,
-                        )
-                    }
-                    when {
-                        list.loadState.append is LoadState.Loading -> {
-                            item {
-                                AnimatedStateHandler(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(42.dp),
-                                    animationResId = R.raw.loading_animation
-                                )
-                            }
-                        }
-
-                        list.loadState.append is LoadState.Error -> {
-                            item {
-                                AnimatedStateHandler(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(56.dp),
-                                    hasRefreshButton = true,
-                                    onRefresh = { list.retry() },
-                                    animationResId = R.raw.no_wifi
-                                )
-                            }
+                        else -> {
+                            DiscoverResults(
+                                onClickItem = discoverInteraction::onClickCategoryItem,
+                                discoverItems = list
+                            )
                         }
                     }
                 }

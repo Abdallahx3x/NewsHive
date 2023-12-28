@@ -2,20 +2,18 @@ package com.example.viewmodel.discover
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
 import com.example.entities.news.NewsItemEntity
 import com.example.usecases.GetCategoryNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
-import com.example.viewmodel.encode
-import com.example.viewmodel.toCategoryNewsUiState
+import com.example.viewmodel.mapper.encode
+import com.example.viewmodel.mapper.toCategoryNewsUiState
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,9 +33,7 @@ class DiscoverViewModel @Inject constructor(
                     getCategoryNewsUseCase.getLastCategoryNews(category)
                 },
                 onSuccess = { newList ->
-                    viewModelScope.launch {
-                        updateUiStateForCategory(category, newList)
-                    }
+                    updateUiStateForCategory(category, newList)
                 },
                 onError = { onError(it) }
             )

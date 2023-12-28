@@ -3,11 +3,11 @@ package com.example.viewmodel.favourites
 import com.example.viewmodel.base.BaseUiState
 
 data class FavouritesUiState(
-    val favouritesItemUiState: List<FavouritesItemUiState> = emptyList(),
+    val favouriteItemsUiState: List<FavouriteItemUiState> = emptyList(),
     val error: String? = null
 ) : BaseUiState()
 
-data class FavouritesItemUiState(
+data class FavouriteItemUiState(
     override val title: String = "",
     override val content: String = "",
     override val imageUrl: String = "",
@@ -16,5 +16,5 @@ data class FavouritesItemUiState(
     val category: String = "",
 ) : BaseUiState()
 
-fun FavouritesUiState.showContent() = error == null && favouritesItemUiState.isNotEmpty()
-fun FavouritesUiState.showEmpty() = error == null && favouritesItemUiState.isEmpty()
+fun FavouritesUiState.showContent() = error == null && favouriteItemsUiState.isNotEmpty()
+fun FavouritesUiState.showEmpty() = error == null && favouriteItemsUiState.isEmpty()

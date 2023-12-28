@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,6 +45,7 @@ import com.example.ui.composable.NewsHiveCard
 import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
 import com.example.ui.screens.home.composable.BreakingNewsCard
+import com.example.ui.screens.viewAll.navigateToViewAll
 import com.example.ui.theme.customColors
 import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.home.HomeInteraction
@@ -69,6 +71,10 @@ fun HomeScreen(
                 navController.navigateToDetails(
                     homeUiEffect.newsItem
                 )
+            }
+
+            is HomeUiEffect.NavigateToViewALl -> {
+                navController.navigateToViewAll()
             }
         }
     }
@@ -206,8 +212,10 @@ fun HomeContent(
                     style = fontStyle.titleMedium
                 )
                 Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { homeInteraction.onClickViewAll() },
                     text = stringResource(R.string.view_all),
-                    modifier = Modifier.clickable { },
                     color = color.primary,
                     style = fontStyle.titleSmall
                 )

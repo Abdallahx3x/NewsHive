@@ -5,8 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.example.usecases.ManageSavedNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
-import com.example.viewmodel.encode
-import com.example.viewmodel.toFavouritesNewsUiState
+import com.example.viewmodel.mapper.encode
+import com.example.viewmodel.mapper.toFavouritesNewsUiState
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
@@ -25,13 +25,13 @@ class FavouritesViewModel @Inject constructor(
     private fun getData() {
         viewModelScope.launch {
             collectFlow(manageSaveLaterUseCase.getSavedNews()) {
-                this.copy(favouritesItemUiState = it.toFavouritesNewsUiState())
+                this.copy(favouriteItemsUiState = it.toFavouritesNewsUiState())
             }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onClickFavouriteItem(favouritesItemUiState: FavouritesItemUiState) {
+    override fun onClickFavouriteItem(favouritesItemUiState: FavouriteItemUiState) {
         val gson = Gson()
         val json = gson.toJson(favouritesItemUiState.encode())
         sendUiEffect(FavouritesUiEffect.NavigateToDetails(json))

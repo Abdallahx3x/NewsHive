@@ -48,7 +48,6 @@ dependencies {
     implementation(Dependencies.androidxCore)
     implementation(Dependencies.lifecycleRuntime)
     implementation(Dependencies.activityCompose)
-    implementation(platform(Dependencies.composeBom))
     implementation(Dependencies.composeUi)
     implementation(Dependencies.composeUiGraphics)
     implementation(Dependencies.composeUiPreviewTool)
