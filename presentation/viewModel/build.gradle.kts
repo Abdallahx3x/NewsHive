@@ -44,6 +44,7 @@ dependencies {
     implementation(Dependencies.lifecycleViewModel)
     implementation(Dependencies.gson)
     implementation(Dependencies.apacheText)
+    implementation(Dependencies.paging)
     ksp(Dependencies.hiltCompiler)
 
 }

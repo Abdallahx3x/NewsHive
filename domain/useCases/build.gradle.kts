@@ -7,9 +7,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
-dependencies{
+dependencies {
     api(project(Modules.DOMAIN_ENTITIES))
-    implementation (Dependencies.coroutines)
+    implementation(Dependencies.coroutines)
     implementation(Dependencies.dagger)
+    implementation(Dependencies.paging)
 
 }

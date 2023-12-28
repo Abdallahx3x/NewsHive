@@ -6,11 +6,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,10 +19,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.ui.R
 import com.example.ui.theme.customColors
 
 
@@ -32,7 +32,7 @@ import com.example.ui.theme.customColors
 @Composable
 fun BreakingNewsCard(
     modifier: Modifier,
-    title: String?,
+    title: String,
     painter: Painter,
     onClick: () -> Unit,
     contentDescription: String = ""
@@ -47,11 +47,18 @@ fun BreakingNewsCard(
         onClick = { onClick() }
     ) {
         Box {
-            CircularProgressIndicator(
+            Image(
                 modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.Center)
+                    .fillMaxSize(),
+                painter = painterResource(id = R.drawable.empty_image),
+                contentScale = ContentScale.Crop,
+                contentDescription = contentDescription
             )
+//            CircularProgressIndicator(
+//                modifier = Modifier
+//                    .size(24.dp)
+//                    .align(Alignment.Center)
+//            )
             Image(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -76,7 +83,7 @@ fun BreakingNewsCard(
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 12.dp)
                     .padding(horizontal = 16.dp),
-                text = title ?: "",
+                text = title,
                 color = Color.White,
                 style = fontStyle.titleMedium,
                 maxLines = 2,

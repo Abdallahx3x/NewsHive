@@ -43,6 +43,7 @@ dependencies {
     annotationProcessor(Dependencies.roomCompiler)
     ksp(Dependencies.roomCompiler)
     implementation (Dependencies.hilt)
+    implementation(Dependencies.paging)
     implementation(Dependencies.gsonConverter)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExtension)

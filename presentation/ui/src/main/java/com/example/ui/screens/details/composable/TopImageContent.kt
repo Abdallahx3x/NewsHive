@@ -39,6 +39,14 @@ fun TopImageContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(420.dp),
+            painter = painterResource(id = R.drawable.empty_image),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
+        )
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(420.dp),
             painter = image,
             contentDescription = null,
             contentScale = ContentScale.FillBounds
@@ -74,7 +82,7 @@ fun TopImageContent(
 fun TopImageContentPreview() {
     NewsHiveTheme {
         TopImageContent(
-            image = painterResource(id = R.drawable.mooo),
+            image = painterResource(id = R.drawable.mosalah),
             onClickSaveIcon = {},
             onClickBackIcon = {},
             changeSaveIconColor = false

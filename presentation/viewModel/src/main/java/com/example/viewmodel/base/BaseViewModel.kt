@@ -2,6 +2,8 @@ package com.example.viewmodel.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.entities.NetworkException
 import com.example.entities.NewsHiveException
 import com.example.entities.NullDataException
@@ -59,10 +61,34 @@ abstract class BaseViewModel<STATE, UiEffect>(initState: STATE) : ViewModel() {
         }
     }
 
+    fun <T : Any> tryToExecutePaging(
+        call: suspend () -> Flow<PagingData<T>>,
+        onSuccess: suspend (PagingData<T>) -> Unit,
+        onError: (Throwable) -> Unit,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
+        viewModelScope.launch(dispatcher) {
+            try {
+                val result = call().cachedIn(viewModelScope)
+                result.collect { data ->
+                    onSuccess(data)
+                }
+            } catch (e: NetworkException) {
+                onError(e)
+            } catch (e: UnAuthorizedException) {
+                onError(e)
+            } catch (e: NullDataException) {
+                onError(e)
+            } catch (e: RateLimitExceededException) {
+                onError(e)
+            } catch (e: NewsHiveException) {
+                onError(e)
+            }
+        }
+    }
+
     protected fun sendUiEffect(effect: UiEffect) {
         viewModelScope.launch { _effect.emit(effect) }
     }
 
 }
-
-
