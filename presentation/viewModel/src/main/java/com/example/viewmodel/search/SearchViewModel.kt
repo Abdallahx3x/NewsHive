@@ -9,8 +9,8 @@ import androidx.paging.map
 import com.example.entities.news.NewsItemEntity
 import com.example.usecases.ManageSearchNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
-import com.example.viewmodel.encode
-import com.example.viewmodel.toSearchNewsUiState
+import com.example.viewmodel.mapper.encode
+import com.example.viewmodel.mapper.toSearchNewsUiState
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview

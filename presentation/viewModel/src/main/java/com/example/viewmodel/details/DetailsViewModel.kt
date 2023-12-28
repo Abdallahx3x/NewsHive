@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.example.usecases.ManageSavedNewsUseCase
 import com.example.viewmodel.base.BaseUiState
 import com.example.viewmodel.base.BaseViewModel
-import com.example.viewmodel.decode
-import com.example.viewmodel.toNewsItemEntity
+import com.example.viewmodel.mapper.decode
+import com.example.viewmodel.mapper.toNewsItemEntity
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update

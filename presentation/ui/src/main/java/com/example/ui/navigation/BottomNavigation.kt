@@ -1,4 +1,4 @@
-package com.example.ui.screens.bottomNavigation
+package com.example.ui.navigation
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,10 +17,10 @@ import com.example.ui.theme.customColors
 @Composable
 fun BottomNavigation(navController: NavController) {
     val items = listOf(
-        BottomNavigationItem.Home,
-        BottomNavigationItem.Discover,
-        BottomNavigationItem.Search,
-        BottomNavigationItem.Saved,
+        Screen.Home,
+        Screen.Discover,
+        Screen.Search,
+        Screen.Saved,
     )
 
     val color = MaterialTheme.customColors()
@@ -41,7 +41,7 @@ fun BottomNavigation(navController: NavController) {
                 },
                 icon = {
                     Icon(
-                        painter = painterResource(id = item.icon),
+                        painter = painterResource(id = item.icon!!),
                         contentDescription = null
                     )
                 },
@@ -55,7 +55,7 @@ fun BottomNavigation(navController: NavController) {
                 alwaysShowLabel = false,
                 label = {
                     Text(
-                        text = item.title,
+                        text = item.screenRoute,
                         style = MaterialTheme.typography.labelMedium
                     )
                 })

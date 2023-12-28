@@ -1,6 +1,6 @@
 object Dependencies {
 
-    private const val CORE_VERSION = "1.8.0"
+    private const val CORE_VERSION = "1.10.0"
     private const val COIL_VERSION = "2.4.0"
     private const val JUNIT_VERSION = "4.13.2"
     private const val JUNIT_KTS_VERSION = "1.1.5"
@@ -12,9 +12,10 @@ object Dependencies {
     private const val LIFECYCLE_VERSION = "2.3.1"
     private const val LOTTIE_VERSION = "6.0.1"
     private const val ROOM_VERSION = "2.5.1"
-    private const val SPLASH_SCREEN_VERSION = "1.0.0"
+    private const val SPLASH_SCREEN_VERSION = "1.0.1"
     private const val ACTIVITY_COMPOSE = "1.5.1"
     private const val COMPOSE_BOM = "2022.10.00"
+    private const val UI_UTIL_COMPOSE = "1.4.3"
     private const val NAVIGATION_COMPOSE = "2.6.0"
     private const val HILT_NAVIGATION_VERSION = "1.0.0"
     private const val MATERIAL3_VERSION = "1.1.0-beta01"
@@ -25,6 +26,7 @@ object Dependencies {
     private const val APACHE_TEXT_VERSION = "1.9"
     private const val PAGING_VERSION = "3.2.0"
     private const val PAGING_COMPOSE_VERSION = "3.2.0"
+
 
 
     const val androidxCore = "androidx.core:core-ktx:$CORE_VERSION"
@@ -50,7 +52,7 @@ object Dependencies {
     const val activityCompose = "androidx.activity:activity-compose:$ACTIVITY_COMPOSE"
     const val composeBom = "androidx.compose:compose-bom:$COMPOSE_BOM"
     const val composeUi = "androidx.compose.ui:ui:$COMPOSE_FOUNDATION_VERSION"
-    const val composeUtil = "androidx.compose.ui:ui-util"
+    const val composeUtil = "androidx.compose.ui:ui-util:$UI_UTIL_COMPOSE"
 
     const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
     const val composeUiPreviewTool = "androidx.compose.ui:ui-tooling-preview"
@@ -59,7 +61,7 @@ object Dependencies {
     const val composeUiTooling = "androidx.compose.ui:ui-tooling"
     const val composeTestManifest = "androidx.compose.ui:ui-tooling"
     const val navigationCompose =
-        "androidx.navigation:navigation-compose:$NAVIGATION_COMPOSE"
+        "androidx.navigation:navigation-ui-ktx:$NAVIGATION_COMPOSE"
 
     const val accompanistPager = "com.google.accompanist:accompanist-pager:$ACCOMPANIST_PAGER"
     const val accompanistPagerIndicators =
@@ -82,6 +84,6 @@ object Dependencies {
 
     const val paging = "androidx.paging:paging-common-ktx:$PAGING_VERSION"
     const val pagingCompose = "androidx.paging:paging-compose:$PAGING_COMPOSE_VERSION"
-    val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
+    const val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
 
 }

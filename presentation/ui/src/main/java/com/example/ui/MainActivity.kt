@@ -12,10 +12,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+        var keepSplashOpened = true
+        installSplashScreen().setKeepOnScreenCondition { keepSplashOpened }
         setContent {
             NewsHiveTheme {
-                NewsHiveApp()
+                NewsHiveApp(onDataLoaded = { keepSplashOpened = false })
             }
         }
     }

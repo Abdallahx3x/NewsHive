@@ -75,7 +75,7 @@ class NewsHiveRepositoryImpl @Inject constructor(
         language: String
     ): Flow<PagingData<NewsItemEntity>> {
         return Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE),
+            config = PagingConfig(pageSize = CATEGORY_PAGE_SIZE),
             pagingSourceFactory = {
                 CategoryNewsPagingSource(remoteDataStore, categoryName, sort, language)
             }
@@ -91,7 +91,9 @@ class NewsHiveRepositoryImpl @Inject constructor(
     }
 
     companion object {
-        const val PAGE_SIZE = 5
+        const val PAGE_SIZE = 12
+        const val CATEGORY_PAGE_SIZE = 5
+
     }
 
 }

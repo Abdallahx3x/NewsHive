@@ -1,4 +1,4 @@
-package com.example.viewmodel
+package com.example.viewmodel.mapper
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -8,10 +8,11 @@ import com.example.entities.news.NewsItemEntity
 import com.example.viewmodel.base.BaseUiState
 import com.example.viewmodel.details.DetailsUiState
 import com.example.viewmodel.discover.CategoryNewsUiState
-import com.example.viewmodel.favourites.FavouritesItemUiState
+import com.example.viewmodel.favourites.FavouriteItemUiState
 import com.example.viewmodel.home.BreakingNewsUiState
 import com.example.viewmodel.home.RecommendedNewsUiState
 import com.example.viewmodel.search.SearchItemUiState
+import com.example.viewmodel.viewAll.ViewAllItemUiState
 import java.text.SimpleDateFormat
 import java.util.Base64
 import java.util.Date
@@ -62,9 +63,17 @@ fun NewsItemEntity.toCategoryNewsUiState(): CategoryNewsUiState {
     )
 }
 
-fun List<NewsItemEntity>.toCategoryNewsUiState(): List<CategoryNewsUiState> =
-    this.map { it.toCategoryNewsUiState() }
-
+fun NewsItemEntity.toViewAllItemUiState(): ViewAllItemUiState {
+    val publishedTimeString = dateFormat.format(this.publishedTime)
+    return ViewAllItemUiState(
+        title = this.news.title,
+        imageUrl = this.news.imageUrl,
+        content = this.news.content,
+        category = this.news.category,
+        url = this.news.url,
+        publishedAt = publishedTimeString
+    )
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun BaseUiState.encode(): BaseUiState {
@@ -100,9 +109,9 @@ private fun String.decodeBase64(): String {
 }
 
 
-fun NewsItemEntity.toFavouritesNewsUiState(): FavouritesItemUiState {
+fun NewsItemEntity.toFavouritesNewsUiState(): FavouriteItemUiState {
     val publishedTimeString = dateFormat.format(this.publishedTime)
-    return FavouritesItemUiState(
+    return FavouriteItemUiState(
         title = this.news.title,
         imageUrl = this.news.imageUrl,
         content = this.news.content,
@@ -112,7 +121,7 @@ fun NewsItemEntity.toFavouritesNewsUiState(): FavouritesItemUiState {
     )
 }
 
-fun List<NewsItemEntity>.toFavouritesNewsUiState(): List<FavouritesItemUiState> =
+fun List<NewsItemEntity>.toFavouritesNewsUiState(): List<FavouriteItemUiState> =
     this.map { it.toFavouritesNewsUiState() }
 
 @SuppressLint("SimpleDateFormat")
@@ -123,11 +132,13 @@ fun DetailsUiState.toNewsItemEntity(): NewsItemEntity {
         Date()
     }
     return NewsItemEntity(
-        news = NewsEntity( title = this.title,
+        news = NewsEntity(
+            title = this.title,
             imageUrl = this.imageUrl,
             content = this.content,
-            category ="",
-            url = this.url,),
+            category = "",
+            url = this.url,
+        ),
         publishedTime = publishedTime
     )
 }
@@ -144,6 +155,3 @@ fun NewsItemEntity.toSearchNewsUiState(): SearchItemUiState {
         publishedAt = publishedTimeString
     )
 }
-
-fun List<NewsItemEntity>.toSearchNewsUiState(): List<SearchItemUiState> =
-    this.map { it.toSearchNewsUiState() }

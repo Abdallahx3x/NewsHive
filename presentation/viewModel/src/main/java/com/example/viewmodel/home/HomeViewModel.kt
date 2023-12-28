@@ -5,9 +5,9 @@ import com.example.entities.news.NewsItemEntity
 import com.example.usecases.GetBreakingNewsUseCase
 import com.example.usecases.GetRecommendationNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
-import com.example.viewmodel.encode
-import com.example.viewmodel.toBreakingNewsUiState
-import com.example.viewmodel.toRecommendedNewsUiState
+import com.example.viewmodel.mapper.encode
+import com.example.viewmodel.mapper.toBreakingNewsUiState
+import com.example.viewmodel.mapper.toRecommendedNewsUiState
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun onClickViewAll() {
-        TODO("Not yet implemented")
+        sendUiEffect(HomeUiEffect.NavigateToViewALl)
     }
 
     @SuppressLint("NewApi")
@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
     private fun getRecommendationNews() {
         _state.update { it.copy(isLoading = true, error = null) }
         tryToExecute(
-            call = getRecommendationNewsUseCase::invoke,
+            call = getRecommendationNewsUseCase::getRecommendationNews,
             onSuccess = ::onGetRecommendationNews,
             onError = ::onError
         )
