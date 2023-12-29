@@ -19,6 +19,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.ui.R
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 @Composable
 fun AnimatedStateHandler(
@@ -26,7 +27,7 @@ fun AnimatedStateHandler(
     hasRefreshButton: Boolean = false,
     onRefresh: () -> Unit = {},
     animationResId: Int,
-    animationSpeed: Float = 1f
+    animationSpeed: Float = MaterialTheme.dimens.floatValues.float1
 ) {
     val composition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(animationResId)
@@ -51,7 +52,7 @@ fun AnimatedStateHandler(
                 Text(
                     modifier = Modifier,
                     text = stringResource(R.string.refresh),
-                    color = MaterialTheme.customColors().onBackground60,
+                    color = MaterialTheme.customColors.onBackground60,
                     style = MaterialTheme.typography.titleMedium
                 )
             }

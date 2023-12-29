@@ -1,5 +1,9 @@
 package com.example.ui.screens.viewAll
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -23,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -35,6 +38,7 @@ import com.example.ui.composable.NewsHiveCard
 import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.viewAll.ViewAllInteraction
 import com.example.viewmodel.viewAll.ViewAllUiEffect
@@ -70,18 +74,23 @@ fun ViewAllScreen(
 
 @Composable
 fun ViewAllContent(state: ViewAllUiState, viewAllInteraction: ViewAllInteraction) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
+    val dimens = MaterialTheme.dimens
     val systemUiController = rememberSystemUiController()
     val darkMode = isSystemInDarkTheme()
     val viewAllList = state.viewAllItemsUiState.collectAsLazyPagingItems()
     systemUiController.setSystemBarsColor(
-        color = MaterialTheme.customColors().card,
+        color = color.card,
         darkIcons = !darkMode
     )
     NewsHiveScaffold(
         hasAppBar = true,
         title = {
-            Row (modifier = Modifier.fillMaxWidth().padding(start = 24.dp)){
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = dimens.space24)
+            ) {
                 Text(
                     text = stringResource(id = R.string.recommended),
                     textAlign = TextAlign.Start,
@@ -102,7 +111,7 @@ fun ViewAllContent(state: ViewAllUiState, viewAllInteraction: ViewAllInteraction
         showLoading = state.showLoading(),
         onLoading = {
             AnimatedStateHandler(
-                modifier = Modifier.size(200.dp),
+                modifier = Modifier.size(dimens.space200),
                 animationResId = R.raw.loading_animation,
                 animationSpeed = 1.7f
             )
@@ -118,63 +127,72 @@ fun ViewAllContent(state: ViewAllUiState, viewAllInteraction: ViewAllInteraction
         showContent = state.showContent(),
     ) { paddingValues ->
         Box(
-            modifier = Modifier.fillMaxSize().background(color.background).padding(paddingValues)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color.background)
+                .padding(paddingValues)
         ) {
             key(viewAllList.loadState) {
                 when {
                     viewAllList.loadState.refresh is LoadState.Error -> {
                         AnimatedStateHandler(
                             hasRefreshButton = true,
-                            onRefresh = {viewAllInteraction.onRefreshData() },
+                            onRefresh = { viewAllInteraction.onRefreshData() },
                             animationResId = R.raw.no_wifi
                         )
                     }
 
                     viewAllList.loadState.refresh is LoadState.Loading -> {
                         AnimatedStateHandler(
-                            modifier = Modifier.size(200.dp),
+                            modifier = Modifier.size(dimens.space200),
                             animationResId = R.raw.loading_animation,
-                            animationSpeed = 1.7f
+                            animationSpeed = dimens.floatValues.float1_7
                         )
                     }
                 }
             }
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp)
+            AnimatedVisibility(
+                visible = viewAllList.loadState.refresh !is LoadState.Error,
+                enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 500))
             ) {
-                items(viewAllList.itemCount) { item ->
-                    NewsHiveCard(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        onClick = { viewAllInteraction.onClickViewAllItem(viewAllList[item]!!) },
-                        painter = rememberAsyncImagePainter(viewAllList[item]!!.imageUrl),
-                        category = viewAllList[item]!!.category,
-                        title = viewAllList[item]!!.title,
-                        date = viewAllList[item]!!.publishedAt
-                    )
-                }
-                when {
-                    viewAllList.loadState.append is LoadState.Loading -> {
-                        item {
-                            AnimatedStateHandler(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(42.dp),
-                                animationResId = R.raw.loading_animation
-                            )
-                        }
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(dimens.space16)
+                ) {
+                    items(viewAllList.itemCount) { item ->
+                        NewsHiveCard(
+                            modifier = Modifier.padding(bottom = dimens.space16),
+                            onClick = { viewAllInteraction.onClickViewAllItem(viewAllList[item]!!) },
+                            painter = rememberAsyncImagePainter(viewAllList[item]!!.imageUrl),
+                            category = viewAllList[item]!!.category,
+                            title = viewAllList[item]!!.title,
+                            date = viewAllList[item]!!.publishedAt
+                        )
                     }
+                    when {
+                        viewAllList.loadState.append is LoadState.Loading -> {
+                            item {
+                                AnimatedStateHandler(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(dimens.space42),
+                                    animationResId = R.raw.loading_animation
+                                )
+                            }
+                        }
 
-                    viewAllList.loadState.append is LoadState.Error -> {
-                        item {
-                            AnimatedStateHandler(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(56.dp),
-                                hasRefreshButton = true,
-                                onRefresh = { viewAllList.retry() },
-                                animationResId = R.raw.no_wifi
-                            )
+                        viewAllList.loadState.append is LoadState.Error -> {
+                            item {
+                                AnimatedStateHandler(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(dimens.space56),
+                                    hasRefreshButton = true,
+                                    onRefresh = { viewAllList.retry() },
+                                    animationResId = R.raw.no_wifi
+                                )
+                            }
                         }
                     }
                 }

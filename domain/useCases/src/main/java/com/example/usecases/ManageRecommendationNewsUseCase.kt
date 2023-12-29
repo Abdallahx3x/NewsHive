@@ -2,7 +2,7 @@ package com.example.usecases
 
 import javax.inject.Inject
 
-class GetRecommendationNewsUseCase @Inject constructor(
+class ManageRecommendationNewsUseCase @Inject constructor(
     private val newsHiveRepository: NewsHiveRepository
 ) {
     suspend fun getRecommendationNews() = newsHiveRepository

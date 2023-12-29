@@ -13,7 +13,7 @@ data class FavouriteItemUiState(
     override val imageUrl: String = "",
     override val url: String = "",
     override val publishedAt: String = "",
-    val category: String = "",
+    override val category: String = "",
 ) : BaseUiState()
 
 fun FavouritesUiState.showContent() = error == null && favouriteItemsUiState.isNotEmpty()

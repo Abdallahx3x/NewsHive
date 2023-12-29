@@ -22,10 +22,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,13 +37,14 @@ fun BreakingNewsCard(
     onClick: () -> Unit,
     contentDescription: String = ""
 ) {
-    val colors = MaterialTheme.customColors()
+    val colors = MaterialTheme.customColors
     val fontStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
 
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(24.dp),
-        elevation = CardDefaults.cardElevation(5.dp),
+        shape = RoundedCornerShape(dimens.space24),
+        elevation = CardDefaults.cardElevation(dimens.space6),
         onClick = { onClick() }
     ) {
         Box {
@@ -54,11 +55,6 @@ fun BreakingNewsCard(
                 contentScale = ContentScale.Crop,
                 contentDescription = contentDescription
             )
-//            CircularProgressIndicator(
-//                modifier = Modifier
-//                    .size(24.dp)
-//                    .align(Alignment.Center)
-//            )
             Image(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -73,16 +69,16 @@ fun BreakingNewsCard(
                         Brush.verticalGradient(
                             colors = listOf(
                                 colors.transparent,
-                                colors.black.copy(alpha = 0.8f)
-                            ), startY = 200f
+                                colors.black.copy(alpha = dimens.floatValues.float0_8)
+                            ), startY = dimens.floatValues.float200
                         )
                     )
             )
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 12.dp)
-                    .padding(horizontal = 16.dp),
+                    .padding(bottom = dimens.space12)
+                    .padding(horizontal = dimens.space16),
                 text = title,
                 color = Color.White,
                 style = fontStyle.titleMedium,

@@ -15,12 +15,12 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
 import com.example.ui.composable.ActionSnakeBar
 import com.example.ui.composable.GradientBackgroundBox
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.viewmodel.details.DetailsInteraction
 import com.example.viewmodel.details.DetailsUiState
 
@@ -29,8 +29,10 @@ fun BlurredImageDetails(
     state: DetailsUiState,
     detailsInteraction: DetailsInteraction,
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
     val fontStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -38,7 +40,7 @@ fun BlurredImageDetails(
         Image(
             modifier = Modifier
                 .fillMaxSize()
-                .blur(24.dp),
+                .blur(dimens.space24),
             painter = painterResource(id = R.drawable.empty_image),
             contentDescription = null,
             contentScale = ContentScale.Crop
@@ -46,12 +48,15 @@ fun BlurredImageDetails(
         Image(
             modifier = Modifier
                 .fillMaxSize()
-                .blur(24.dp),
+                .blur(dimens.space24),
             painter = rememberAsyncImagePainter(model = state.imageUrl),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        GradientBackgroundBox(gradientStartY = 200f, gradientEndY = 0f)
+        GradientBackgroundBox(
+            gradientStartY = dimens.floatValues.float200,
+            gradientEndY = dimens.floatValues.float0
+        )
         Column(
             Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -63,12 +68,12 @@ fun BlurredImageDetails(
             )
             Text(
                 modifier = Modifier
-                    .padding(vertical = 16.dp, horizontal = 32.dp),
+                    .padding(vertical = dimens.space16, horizontal = dimens.space32),
                 text = state.title,
                 style = fontStyle.titleLarge,
                 color = color.onPrimary
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(dimens.floatValues.float1))
             SwipeToSeeMoreIndicator(color = color.onPrimary, fontStyle = fontStyle.titleSmall)
         }
         ActionSnakeBar(

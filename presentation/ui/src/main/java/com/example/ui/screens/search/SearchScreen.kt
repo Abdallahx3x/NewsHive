@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -26,6 +25,7 @@ import com.example.ui.screens.details.navigateToDetails
 import com.example.ui.screens.search.composable.SearchResults
 import com.example.ui.screens.search.composable.SearchTextField
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.search.SearchInteraction
 import com.example.viewmodel.search.SearchUiEffect
@@ -63,14 +63,15 @@ fun SearchContent(
     val query = state.query.collectAsState()
     val systemUiController = rememberSystemUiController()
     val darkMode = isSystemInDarkTheme()
+    val dimens = MaterialTheme.dimens
     systemUiController.setSystemBarsColor(
-        color = MaterialTheme.customColors().card,
+        color = MaterialTheme.customColors.card,
         darkIcons = !darkMode
     )
     val searchItems = state.searchItems.collectAsLazyPagingItems()
     NewsHiveScaffold(
         hasAppBar = true,
-        appBarModifier = Modifier.height(88.dp),
+        appBarModifier = Modifier.height(dimens.space88),
         title = {
             SearchTextField(
                 onChangeSearchQuery = { searchInteraction.onChangeSearchQuery(it) },
@@ -80,9 +81,9 @@ fun SearchContent(
         showLoading = state.showLoading(),
         onLoading = {
             AnimatedStateHandler(
-                modifier = Modifier.size(200.dp),
+                modifier = Modifier.size(dimens.space200),
                 animationResId = R.raw.loading_animation,
-                animationSpeed = 1.7f
+                animationSpeed = dimens.floatValues.float1_7
             )
         },
         showError = state.showError(),
@@ -98,7 +99,7 @@ fun SearchContent(
         Box(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.customColors().background)
+                .background(MaterialTheme.customColors.background)
                 .padding(paddingValues)
         ) {
             key(searchItems.loadState) {
@@ -113,9 +114,9 @@ fun SearchContent(
 
                     searchItems.loadState.refresh is LoadState.Loading && query.value.isNotEmpty() -> {
                         AnimatedStateHandler(
-                            modifier = Modifier.size(200.dp),
+                            modifier = Modifier.size(dimens.space200),
                             animationResId = R.raw.loading_animation,
-                            animationSpeed = 1.7f
+                            animationSpeed = dimens.floatValues.float1_7
                         )
                     }
                 }
@@ -125,6 +126,7 @@ fun SearchContent(
                     AnimatedStateHandler(animationResId = R.raw.empty_search)
                     searchInteraction.onChangeSearchQuery("")
                 }
+
                 query.value.isNotEmpty() -> {
                     SearchResults(
                         onClickItem = searchInteraction::onClickSearchItem,

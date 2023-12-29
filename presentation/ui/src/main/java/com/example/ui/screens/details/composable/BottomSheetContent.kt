@@ -19,27 +19,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.viewmodel.details.DetailsUiState
 
 @Composable
 fun BottomSheetContent(state: DetailsUiState) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
     val fontStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
     val uriHandler = LocalUriHandler.current
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(380.dp)
-            .padding(horizontal = 16.dp)
+            .height(dimens.space380)
+            .padding(horizontal = dimens.space16)
     ) {
         Text(
             modifier = Modifier
-                .padding(bottom = 16.dp)
+                .padding(bottom = dimens.space16)
                 .align(Alignment.TopCenter),
             text = stringResource(R.string.about),
             style = fontStyle.titleLarge,
@@ -47,26 +48,26 @@ fun BottomSheetContent(state: DetailsUiState) {
         )
         Column(
             Modifier
-                .padding(top = 33.dp)
+                .padding(top = dimens.space32)
                 .matchParentSize()
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
                 modifier = Modifier
-                    .padding(bottom = 32.dp, end = 24.dp),
+                    .padding(bottom = dimens.space32, end = dimens.space24),
                 text = state.content,
                 style = fontStyle.titleMedium,
                 color = color.onBackground87
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(dimens.floatValues.float1))
             Button(
                 onClick = { uriHandler.openUri(state.url) },
                 modifier = Modifier
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = dimens.space16)
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors(color.primary),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(dimens.space12)
             ) {
                 Text(
                     text = stringResource(R.string.read_more),
@@ -85,7 +86,7 @@ fun BottomSheetContentPreview() {
         BottomSheetContent(
             state = DetailsUiState(
                 content = "Hello Content Hello Content" +
-                          "Hello Content Hello Content"
+                        "Hello Content Hello Content"
             )
         )
     }

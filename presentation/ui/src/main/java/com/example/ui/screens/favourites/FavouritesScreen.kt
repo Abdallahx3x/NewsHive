@@ -27,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -39,6 +38,7 @@ import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
 import com.example.ui.screens.favourites.composable.DismissBackground
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.favourites.FavouritesInteraction
 import com.example.viewmodel.favourites.FavouritesUiEffect
@@ -74,9 +74,10 @@ fun FavouritesContent(
     favouritesInteraction: FavouritesInteraction
 ) {
     val systemUiController = rememberSystemUiController()
+    val dimens= MaterialTheme.dimens
     val darkMode = isSystemInDarkTheme()
     systemUiController.setSystemBarsColor(
-        color = MaterialTheme.customColors().card,
+        color = MaterialTheme.customColors.card,
         darkIcons = !darkMode
     )
     NewsHiveScaffold(
@@ -100,11 +101,11 @@ fun FavouritesContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(MaterialTheme.customColors().background)
+                .background(MaterialTheme.customColors.background)
         ) {
             LazyColumn(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                contentPadding = PaddingValues(top = 16.dp)
+                modifier = Modifier.padding(horizontal = dimens.space16),
+                contentPadding = PaddingValues(top = dimens.space16)
             ) {
                 items(state.favouriteItemsUiState, key = { it.title }) { card ->
                     val dismissState = rememberDismissState(
@@ -128,14 +129,14 @@ fun FavouritesContent(
                                 CircularProgressIndicator(
                                     modifier = Modifier
                                         .padding(
-                                            bottom = 16.dp,
-                                            start = 26.dp
+                                            bottom = dimens.space16,
+                                            start = dimens.space26
                                         )
-                                        .size(24.dp)
+                                        .size(dimens.space24)
                                         .align(Alignment.CenterStart)
                                 )
                                 NewsHiveCard(
-                                    modifier = Modifier.padding(bottom = 16.dp),
+                                    modifier = Modifier.padding(bottom =  dimens.space16),
                                     onClick = { favouritesInteraction.onClickFavouriteItem(card) },
                                     painter = rememberAsyncImagePainter(card.imageUrl),
                                     category = card.category,

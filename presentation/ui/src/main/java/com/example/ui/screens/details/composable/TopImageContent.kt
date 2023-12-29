@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.composable.GradientBackgroundBox
 import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 @Composable
 fun TopImageContent(
@@ -29,16 +29,18 @@ fun TopImageContent(
     onClickBackIcon: () -> Unit,
     changeSaveIconColor: Boolean,
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
+    val dimens = MaterialTheme.dimens
+
     Box(
         Modifier
             .fillMaxWidth()
-            .height(420.dp)
+            .height(dimens.space420)
     ) {
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(420.dp),
+                .height(dimens.space420),
             painter = painterResource(id = R.drawable.empty_image),
             contentDescription = null,
             contentScale = ContentScale.FillBounds
@@ -46,17 +48,20 @@ fun TopImageContent(
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(420.dp),
+                .height(dimens.space420),
             painter = image,
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
-        GradientBackgroundBox(gradientStartY = 0f, gradientEndY = 220f)
+        GradientBackgroundBox(
+            gradientStartY = dimens.floatValues.float0,
+            gradientEndY = dimens.floatValues.float220
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp)
-                .padding(horizontal = 16.dp),
+                .padding(top = dimens.space24)
+                .padding(horizontal = dimens.space16),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = { onClickBackIcon() }) {

@@ -22,7 +22,7 @@ data class CategoryNewsUiState(
     override val content: String = "",
     override val url: String = "",
     override val publishedAt: String = "",
-    val categoryName: String = ""
+    override val category: String = ""
 ) : BaseUiState()
 
 data class Category(

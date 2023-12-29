@@ -19,7 +19,7 @@ data class SearchItemUiState(
     override val imageUrl: String = "",
     override val url: String = "",
     override val publishedAt: String = "",
-    val category: String = ""
+    override val category: String = ""
 ) : BaseUiState()
 
 fun SearchUiState.showError() = !isLoading && error != null

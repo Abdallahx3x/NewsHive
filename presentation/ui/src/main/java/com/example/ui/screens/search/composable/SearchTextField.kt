@@ -25,9 +25,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -35,7 +35,8 @@ fun SearchTextField(
     onChangeSearchQuery: (String) -> Unit,
     text: String,
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
+    val dimens=MaterialTheme.dimens
     val fontStyle = MaterialTheme.typography
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -54,9 +55,9 @@ fun SearchTextField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 16.dp)
-                .height(56.dp)
-                .clip(RoundedCornerShape(12)),
+                .padding(horizontal = dimens.space24, vertical = dimens.space16)
+                .height(dimens.space56)
+                .clip(RoundedCornerShape(dimens.space12)),
             value = text,
             textStyle= fontStyle.titleMedium,
             placeholder = {
@@ -67,7 +68,7 @@ fun SearchTextField(
                 )
             },
             onValueChange = { onChangeSearchQuery(it) },
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(dimens.space12),
             leadingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.search),
