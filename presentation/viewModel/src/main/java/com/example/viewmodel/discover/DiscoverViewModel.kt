@@ -6,8 +6,9 @@ import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
 import com.example.entities.news.NewsItemEntity
-import com.example.usecases.GetCategoryNewsUseCase
+import com.example.usecases.ManageCategoryNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
+import com.example.viewmodel.base.StringsResource
 import com.example.viewmodel.mapper.encode
 import com.example.viewmodel.mapper.toCategoryNewsUiState
 import com.google.gson.Gson
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val getCategoryNewsUseCase: GetCategoryNewsUseCase
+    private val getCategoryNewsUseCase: ManageCategoryNewsUseCase,
+    private val stringsResource: StringsResource
 ) : BaseViewModel<DiscoverUiState, DiscoverUiEffect>(DiscoverUiState()), DiscoverInteraction {
 
     init {
@@ -59,11 +61,11 @@ class DiscoverViewModel @Inject constructor(
         val filteredList = categoryNewsData.filter { it.news.imageUrl.isNotEmpty() }
         val uiStateList = flowOf(filteredList.map { it.toCategoryNewsUiState() })
         when (category) {
-            "sports" -> _state.update { it.copy(sportsNews = uiStateList) }
-            "science" -> _state.update { it.copy(scienceNews = uiStateList) }
-            "health" -> _state.update { it.copy(healthNews = uiStateList) }
-            "technology" -> _state.update { it.copy(technologyNews = uiStateList) }
-            "business" -> _state.update { it.copy(businessNews = uiStateList) }
+            stringsResource.sports -> _state.update { it.copy(sportsNews = uiStateList) }
+            stringsResource.science -> _state.update { it.copy(scienceNews = uiStateList) }
+            stringsResource.health -> _state.update { it.copy(healthNews = uiStateList) }
+            stringsResource.technology -> _state.update { it.copy(technologyNews = uiStateList) }
+            stringsResource.business -> _state.update { it.copy(businessNews = uiStateList) }
         }
     }
 

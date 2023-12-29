@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.map
 import com.example.entities.news.NewsItemEntity
-import com.example.usecases.GetRecommendationNewsUseCase
+import com.example.usecases.ManageRecommendationNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
 import com.example.viewmodel.mapper.encode
 import com.example.viewmodel.mapper.toViewAllItemUiState
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewAllViewModel @Inject constructor(
-    private val getRecommendationNewsUseCase: GetRecommendationNewsUseCase
+    private val getRecommendationNewsUseCase: ManageRecommendationNewsUseCase
 ) : BaseViewModel<ViewAllUiState, ViewAllUiEffect>(ViewAllUiState()), ViewAllInteraction {
 
     init {
@@ -36,7 +36,6 @@ class ViewAllViewModel @Inject constructor(
             },
             onError = { onError(it) }
         )
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -68,6 +67,5 @@ class ViewAllViewModel @Inject constructor(
     private fun onError(throwable: Throwable) {
         _state.update { it.copy(isLoading = false, error = throwable.message) }
     }
-
 
 }

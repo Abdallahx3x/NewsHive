@@ -8,6 +8,7 @@ data class DetailsUiState(
     override val content: String = "",
     override val url: String = "",
     override val publishedAt: String = "",
+    override val category: String = "",
     val changeSavedIconColor: Boolean = false,
     val error: String? = null
 ) : BaseUiState()

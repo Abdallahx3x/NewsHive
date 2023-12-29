@@ -25,9 +25,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,8 +40,9 @@ fun DiscoverCard(
     title: String,
     date: String,
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
     val fontStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
 
     Card(
         onClick = {
@@ -49,27 +50,27 @@ fun DiscoverCard(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .height(320.dp)
-            .padding(horizontal = 16.dp)
-            .padding(top = 16.dp),
+            .height(dimens.space320)
+            .padding(horizontal = dimens.space16)
+            .padding(top = dimens.space16),
         colors = CardDefaults.cardColors(color.card)
     ) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(bottom = 16.dp), Arrangement.SpaceBetween
+                .padding(bottom = dimens.space16), Arrangement.SpaceBetween
         ) {
             Box {
                 CircularProgressIndicator(
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(dimens.space24)
                         .align(Alignment.Center)
                 )
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(188.dp)
-                        .clip(RoundedCornerShape(12.dp)),
+                        .height(dimens.space188)
+                        .clip(RoundedCornerShape(dimens.space12)),
                     painter = painter,
                     contentScale = ContentScale.Crop,
                     contentDescription = contentDescription
@@ -78,14 +79,14 @@ fun DiscoverCard(
 
             Text(
                 modifier = Modifier
-                    .padding(top = 14.dp)
-                    .padding(horizontal = 16.dp),
+                    .padding(top = dimens.space14)
+                    .padding(horizontal = dimens.space16),
                 text = category,
                 color = color.onBackground60,
                 style = fontStyle.titleSmall
             )
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = dimens.space16),
                 text = title,
                 color = color.onBackground87,
                 style = fontStyle.titleMedium,
@@ -93,7 +94,7 @@ fun DiscoverCard(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = dimens.space16),
                 text = date,
                 color = color.onBackground60,
                 style = fontStyle.titleSmall

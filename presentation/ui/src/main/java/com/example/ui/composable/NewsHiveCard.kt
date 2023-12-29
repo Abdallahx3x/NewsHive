@@ -24,10 +24,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,14 +41,16 @@ fun NewsHiveCard(
     title: String,
     date: String
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
     val fontStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(90.dp),
+            .height(dimens.space90),
         colors = CardDefaults.cardColors(color.card),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(dimens.space12),
         onClick = { onClick() }
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -56,16 +58,16 @@ fun NewsHiveCard(
                 Image(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(90.dp)
-                        .clip(RoundedCornerShape(12.dp)),
+                        .width(dimens.space90)
+                        .clip(RoundedCornerShape(dimens.space12)),
                     painter = painterResource(id = R.drawable.empty_image),
                     contentScale = ContentScale.Crop, contentDescription = contentDescription
                 )
                 Image(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(90.dp)
-                        .clip(RoundedCornerShape(12.dp)),
+                        .width(dimens.space90)
+                        .clip(RoundedCornerShape(dimens.space12)),
                     painter = painter,
                     contentScale = ContentScale.Crop, contentDescription = contentDescription
                 )
@@ -74,7 +76,7 @@ fun NewsHiveCard(
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = dimens.space24),
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 Text(

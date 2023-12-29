@@ -30,6 +30,7 @@ import com.example.ui.screens.details.composable.BlurredImageDetails
 import com.example.ui.screens.details.composable.BottomSheetContent
 import com.example.ui.theme.NewsHiveTheme
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.details.DetailsInteraction
 import com.example.viewmodel.details.DetailsUiEffect
@@ -62,8 +63,9 @@ fun DetailsContent(
     detailsInteraction: DetailsInteraction,
 ) {
     val systemUiController = rememberSystemUiController()
-    val color = MaterialTheme.customColors()
-    var offsetY by remember { mutableStateOf(0f) }
+    val color = MaterialTheme.customColors
+    val dimens = MaterialTheme.dimens
+    var offsetY by remember { mutableStateOf(dimens.floatValues.float0) }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
     val screenHeight =
@@ -75,9 +77,9 @@ fun DetailsContent(
             BottomSheetContent(state = state)
         },
         scaffoldState = bottomSheetScaffoldState,
-        sheetShape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+        sheetShape = RoundedCornerShape(topStart = dimens.space24, topEnd = dimens.space24),
         sheetContainerColor = color.card,
-        sheetPeekHeight = 0.dp
+        sheetPeekHeight = dimens.zero
     ) {
         systemUiController.setSystemBarsColor(Color.Black, darkIcons = false)
         Box(modifier = Modifier
@@ -86,13 +88,13 @@ fun DetailsContent(
                 detectDragGestures { change, dragAmount ->
                     change.consume()
                     when {
-                        dragAmount.y > 0 -> {
+                        dragAmount.y > dimens.intValues.int0 -> {
                             scope.launch {
                                 bottomSheetScaffoldState.bottomSheetState.partialExpand()
                             }
                         }
 
-                        dragAmount.y < 0 -> {
+                        dragAmount.y < dimens.intValues.int0 -> {
                             scope.launch {
                                 bottomSheetScaffoldState.bottomSheetState.expand()
                             }
@@ -102,8 +104,8 @@ fun DetailsContent(
                     if (offsetY > screenHeight) {
                         offsetY = screenHeight
                     }
-                    if (offsetY < 0) {
-                        offsetY = 0F
+                    if (offsetY < dimens.intValues.int0) {
+                        offsetY = dimens.floatValues.float0
                     }
                 }
             }) {

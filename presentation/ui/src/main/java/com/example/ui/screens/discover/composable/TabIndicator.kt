@@ -18,9 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 
@@ -29,12 +29,19 @@ import com.google.accompanist.pager.PagerState
 @Composable
 fun TabIndicator(pagerState: PagerState, tabPositions: List<TabPosition>) {
     val transition = updateTransition(pagerState.currentPage, label = "")
+    val dimens = MaterialTheme.dimens
     val indicatorStart by transition.animateDp(
         transitionSpec = {
             if (initialState < targetState) {
-                spring(dampingRatio = 1f, stiffness = 50f)
+                spring(
+                    dampingRatio = dimens.floatValues.float1,
+                    stiffness = dimens.floatValues.float50
+                )
             } else {
-                spring(dampingRatio = 1f, stiffness = 1000f)
+                spring(
+                    dampingRatio = dimens.floatValues.float1,
+                    stiffness = dimens.floatValues.float1000
+                )
 
             }
         }, label = ""
@@ -45,9 +52,15 @@ fun TabIndicator(pagerState: PagerState, tabPositions: List<TabPosition>) {
     val indicatorEnd by transition.animateDp(
         transitionSpec = {
             if (initialState < targetState) {
-                spring(dampingRatio = 1f, stiffness = 1000f)
+                spring(
+                    dampingRatio = dimens.floatValues.float1,
+                    stiffness = dimens.floatValues.float1000
+                )
             } else {
-                spring(dampingRatio = 1f, stiffness = 50f)
+                spring(
+                    dampingRatio = dimens.floatValues.float1,
+                    stiffness = dimens.floatValues.float50
+                )
 
             }
         }, label = ""
@@ -60,9 +73,12 @@ fun TabIndicator(pagerState: PagerState, tabPositions: List<TabPosition>) {
             .offset(x = indicatorStart)
             .wrapContentSize(align = Alignment.BottomStart)
             .width(indicatorEnd - indicatorStart)
-            .padding(2.dp)
+            .padding(dimens.space2)
             .fillMaxSize()
-            .background(color = MaterialTheme.customColors().primary, RoundedCornerShape(50))
-            .zIndex(1f)
+            .background(
+                color = MaterialTheme.customColors.primary,
+                RoundedCornerShape(dimens.intValues.int50)
+            )
+            .zIndex(dimens.floatValues.float1)
     )
 }

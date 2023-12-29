@@ -22,8 +22,7 @@ fun BottomNavigation(navController: NavController) {
         Screen.Search,
         Screen.Saved,
     )
-
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
     NavigationBar(containerColor = color.card) {
         items.forEach { item ->
             NavigationBarItem(

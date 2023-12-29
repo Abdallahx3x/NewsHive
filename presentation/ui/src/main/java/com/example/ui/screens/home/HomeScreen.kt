@@ -3,7 +3,6 @@ package com.example.ui.screens.home
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,18 +14,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
@@ -34,19 +29,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.ui.R
 import com.example.ui.composable.AnimatedStateHandler
-import com.example.ui.composable.NewsHiveCard
 import com.example.ui.composable.NewsHiveScaffold
 import com.example.ui.screens.details.navigateToDetails
 import com.example.ui.screens.home.composable.BreakingNewsCard
+import com.example.ui.screens.home.composable.RecommendedNewsSection
 import com.example.ui.screens.viewAll.navigateToViewAll
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 import com.example.ui.util.CollectUiEffect
 import com.example.viewmodel.home.HomeInteraction
 import com.example.viewmodel.home.HomeUiEffect
@@ -87,13 +82,14 @@ fun HomeContent(
     state: HomeUiState,
     homeInteraction: HomeInteraction
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
     val fontStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
     val pageState = rememberPagerState(2)
     val systemUiController = rememberSystemUiController()
     val darkMode = isSystemInDarkTheme()
     systemUiController.setSystemBarsColor(
-        color = MaterialTheme.customColors().card,
+        color = color.card,
         darkIcons = !darkMode
     )
     NewsHiveScaffold(
@@ -110,7 +106,7 @@ fun HomeContent(
         showLoading = state.showLoading(),
         onLoading = {
             AnimatedStateHandler(
-                modifier = Modifier.size(200.dp),
+                modifier = Modifier.size(dimens.space200),
                 animationResId = R.raw.loading_animation,
                 animationSpeed = 1.7f
             )
@@ -134,7 +130,7 @@ fun HomeContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp, start = 16.dp)
+                    .padding(top = dimens.space24, start = dimens.space16)
             ) {
                 Text(
                     text = stringResource(R.string.breaking_news),
@@ -145,31 +141,37 @@ fun HomeContent(
             HorizontalPager(
                 state = pageState,
                 modifier = Modifier
-                    .padding(top = 16.dp)
-                    .height(220.dp),
-                contentPadding = PaddingValues(horizontal = 40.dp),
+                    .padding(top = dimens.space16)
+                    .height(dimens.space220),
+                contentPadding = PaddingValues(horizontal = dimens.space40),
                 pageCount = state.breakingNewsUiState.size,
             ) { page ->
                 BreakingNewsCard(
                     modifier = Modifier
-                        .size(width = 340.dp, height = 200.dp)
+                        .size(width = dimens.space340, height = dimens.space200)
                         .graphicsLayer {
                             val pageOffset = (
                                     (pageState.currentPage - page) + pageState
                                         .currentPageOffsetFraction
                                     ).absoluteValue
                             lerp(
-                                start = 0.9f,
-                                stop = 1f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                start = dimens.floatValues.float0_9,
+                                stop = dimens.floatValues.float1,
+                                fraction = dimens.floatValues.float1 - pageOffset.coerceIn(
+                                    dimens.floatValues.float0,
+                                    dimens.floatValues.float1
+                                )
                             ).also {
                                 scaleX = it
                                 scaleY = it
                             }
                             alpha = lerp(
-                                start = 0.5f,
-                                stop = 1f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                start = dimens.floatValues.float0_5,
+                                stop = dimens.floatValues.float1,
+                                fraction = dimens.floatValues.float1 - pageOffset.coerceIn(
+                                    dimens.floatValues.float0,
+                                    dimens.floatValues.float1
+                                )
                             )
                         },
                     title = state.breakingNewsUiState[page].title,
@@ -187,63 +189,72 @@ fun HomeContent(
                     val backgroundColor =
                         if (pageState.currentPage == it) color.primary else color.gray
                     val width: Dp by animateDpAsState(
-                        targetValue = if (pageState.currentPage == it) 25.dp else 10.dp,
+                        targetValue = if (pageState.currentPage == it) dimens.space24 else dimens.space10,
                         label = ""
                     )
                     Box(
                         modifier = Modifier
-                            .padding(horizontal = 4.dp)
-                            .padding(bottom = 24.dp)
-                            .size(height = 10.dp, width = width)
+                            .padding(horizontal = dimens.space4)
+                            .padding(bottom = dimens.space24)
+                            .size(height = dimens.space10, width = width)
                             .clip(CircleShape)
                             .background(backgroundColor)
                     )
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = stringResource(R.string.recommended), color = color.onBackground87,
-                    style = fontStyle.titleMedium
-                )
-                Text(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { homeInteraction.onClickViewAll() },
-                    text = stringResource(R.string.view_all),
-                    color = color.primary,
-                    style = fontStyle.titleSmall
-                )
-            }
-            LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-                items(state.recommendedNewsUiState.size) {
-                    val item = state.recommendedNewsUiState[it]
-                    Box {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .padding(
-                                    bottom = 16.dp,
-                                    start = 26.dp
-                                )
-                                .size(24.dp)
-                                .align(CenterStart)
-                        )
-                        NewsHiveCard(
-                            modifier = Modifier.padding(bottom = 16.dp),
-                            onClick = { homeInteraction.onClickRecommendedNewsItem(item) },
-                            painter = rememberAsyncImagePainter(item.imageUrl),
-                            category = item.category,
-                            title = item.title,
-                            date = item.publishedAt
-                        )
-                    }
-                }
-            }
+//            RecommendedNewsSection(
+//                recommendedNews = state.recommendedNewsUiState,
+//                onNewsItemClick = homeInteraction::onClickRecommendedNewsItem
+//            )
+            RecommendedNewsSection(
+                onNewsItemClick = homeInteraction::onClickRecommendedNewsItem,
+                onSeeAllClick = homeInteraction::onClickViewAll,
+                recommendedNews = state.recommendedNewsUiState
+            )
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = dimens.space16)
+//                    .padding(bottom = dimens.space16),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(
+//                    text = stringResource(R.string.recommended), color = color.onBackground87,
+//                    style = fontStyle.titleMedium
+//                )
+//                Text(
+//                    modifier = Modifier
+//                        .clip(RoundedCornerShape(dimens.space8))
+//                        .clickable { homeInteraction.onClickViewAll() },
+//                    text = stringResource(R.string.view_all),
+//                    color = color.primary,
+//                    style = fontStyle.titleSmall
+//                )
+//            }
+//            LazyColumn(modifier = Modifier.padding(horizontal = dimens.space16)) {
+//                items(state.recommendedNewsUiState.size) {
+//                    val item = state.recommendedNewsUiState[it]
+//                    Box {
+//                        CircularProgressIndicator(
+//                            modifier = Modifier
+//                                .padding(
+//                                    bottom = dimens.space16,
+//                                    start = dimens.space26
+//                                )
+//                                .size(dimens.space24)
+//                                .align(CenterStart)
+//                        )
+//                        NewsHiveCard(
+//                            modifier = Modifier.padding(bottom = dimens.space16),
+//                            onClick = { homeInteraction.onClickRecommendedNewsItem(item) },
+//                            painter = rememberAsyncImagePainter(item.imageUrl),
+//                            category = item.category,
+//                            title = item.title,
+//                            date = item.publishedAt
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 }

@@ -9,9 +9,12 @@ import androidx.compose.ui.unit.sp
 import com.example.ui.R
 
 // Set of Material typography styles to start with
-val Roboto= FontFamily(Font(R.font.roboto_medium, weight = FontWeight.Medium),
+val Roboto = FontFamily(
+    Font(R.font.roboto_medium, weight = FontWeight.Medium),
     Font(R.font.roboto_medium, weight = FontWeight.SemiBold),
-    Font(R.font.roboto_bold, weight = FontWeight.Bold)  )
+    Font(R.font.roboto_bold, weight = FontWeight.Bold)
+)
+
 val Typography = Typography(
     titleMedium = TextStyle(
         fontFamily = Roboto,
@@ -22,7 +25,7 @@ val Typography = Typography(
     ),
 
     titleLarge = TextStyle(
-        fontFamily =Roboto,
+        fontFamily = Roboto,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         lineHeight = 28.sp,
@@ -42,7 +45,5 @@ val Typography = Typography(
         fontSize = 14.sp,
         lineHeight = 22.sp,
         letterSpacing = 0.5.sp
-    ),
-
-
+    )
 )

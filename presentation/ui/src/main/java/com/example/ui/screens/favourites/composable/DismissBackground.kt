@@ -14,27 +14,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 @Composable
 fun DismissBackground() {
-    val colors = MaterialTheme.customColors()
+    val colors = MaterialTheme.customColors
+    val dimens = MaterialTheme.dimens
 
     Row(
         modifier = Modifier
-            .height(90.dp)
+            .height(dimens.space90)
             .fillMaxSize()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(dimens.space12))
             .background(colors.red)
-            .padding(12.dp, 8.dp),
+            .padding(dimens.space12, dimens.space8),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
         Icon(
             painter = painterResource(id = R.drawable.trashicon),
-            tint = MaterialTheme.customColors().card,
+            tint = MaterialTheme.customColors.card,
             contentDescription = ""
         )
     }

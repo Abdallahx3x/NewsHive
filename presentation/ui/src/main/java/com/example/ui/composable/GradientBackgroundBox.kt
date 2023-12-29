@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.unit.dp
 import com.example.ui.theme.customColors
+import com.example.ui.theme.dimens
 
 @Composable
 fun GradientBackgroundBox(
@@ -17,15 +17,19 @@ fun GradientBackgroundBox(
     gradientStartY: Float,
     gradientEndY: Float,
 ) {
-    val color = MaterialTheme.customColors()
+    val color = MaterialTheme.customColors
+    val dimens = MaterialTheme.dimens
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .blur(30.dp)
+            .blur(dimens.space30)
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(color.black.copy(alpha = 0.6f), color.transparent),
+                    colors = listOf(
+                        color.black.copy(alpha = dimens.floatValues.float0_6),
+                        color.transparent
+                    ),
                     endY = gradientEndY
                 )
             )
@@ -35,7 +39,9 @@ fun GradientBackgroundBox(
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(color.transparent, color.black.copy(alpha = 0.8f)),
+                    colors = listOf(
+                        color.transparent, color.black.copy(alpha = dimens.floatValues.float0_8)
+                    ),
                     startY = gradientStartY
                 )
             )

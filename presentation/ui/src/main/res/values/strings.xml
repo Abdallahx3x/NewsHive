@@ -12,4 +12,10 @@
     <string name="favourites">Favourites</string>
     <string name="search">Search</string>
     <string name="item_saved_successfully">Item saved successfully</string>
+    <string name="science">science</string>
+    <string name="health">health</string>
+    <string name="technology">technology</string>
+    <string name="business">business</string>
+    <string name="empty" />
+    <string name="newsitem">newsItem</string>
 </resources>

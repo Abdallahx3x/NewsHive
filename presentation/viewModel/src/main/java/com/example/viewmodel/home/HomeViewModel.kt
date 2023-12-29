@@ -2,8 +2,8 @@ package com.example.viewmodel.home
 
 import android.annotation.SuppressLint
 import com.example.entities.news.NewsItemEntity
-import com.example.usecases.GetBreakingNewsUseCase
-import com.example.usecases.GetRecommendationNewsUseCase
+import com.example.usecases.ManageBreakingNewsUseCase
+import com.example.usecases.ManageRecommendationNewsUseCase
 import com.example.viewmodel.base.BaseViewModel
 import com.example.viewmodel.mapper.encode
 import com.example.viewmodel.mapper.toBreakingNewsUiState
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getBreakingNewsUseCase: GetBreakingNewsUseCase,
-    private val getRecommendationNewsUseCase: GetRecommendationNewsUseCase
+    private val getBreakingNewsUseCase: ManageBreakingNewsUseCase,
+    private val getRecommendationNewsUseCase: ManageRecommendationNewsUseCase
 ) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()), HomeInteraction {
     init {
         onRefreshData()

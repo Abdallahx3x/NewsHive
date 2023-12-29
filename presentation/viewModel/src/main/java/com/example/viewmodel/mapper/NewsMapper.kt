@@ -55,11 +55,10 @@ fun NewsItemEntity.toCategoryNewsUiState(): CategoryNewsUiState {
     return CategoryNewsUiState(
         title = this.news.title,
         imageUrl = this.news.imageUrl,
-        categoryName = this.news.category,
+        category = this.news.category,
         url = this.news.url,
         content = this.news.content,
         publishedAt = publishedTimeString
-
     )
 }
 
@@ -82,7 +81,8 @@ fun BaseUiState.encode(): BaseUiState {
         content = content.encodeBase64(),
         imageUrl = imageUrl.encodeBase64(),
         url = url.encodeBase64(),
-        publishedAt = publishedAt.encodeBase64()
+        publishedAt = publishedAt.encodeBase64(),
+        category = category.encodeBase64()
     )
 }
 
@@ -93,10 +93,10 @@ fun BaseUiState.decode(): BaseUiState {
         content = content.decodeBase64(),
         imageUrl = imageUrl.decodeBase64(),
         url = url.decodeBase64(),
-        publishedAt = publishedAt.decodeBase64()
+        publishedAt = publishedAt.decodeBase64(),
+        category = category.decodeBase64()
     )
 }
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun String.encodeBase64(): String {
@@ -107,7 +107,6 @@ private fun String.encodeBase64(): String {
 private fun String.decodeBase64(): String {
     return String(Base64.getUrlDecoder().decode(this))
 }
-
 
 fun NewsItemEntity.toFavouritesNewsUiState(): FavouriteItemUiState {
     val publishedTimeString = dateFormat.format(this.publishedTime)
@@ -136,13 +135,12 @@ fun DetailsUiState.toNewsItemEntity(): NewsItemEntity {
             title = this.title,
             imageUrl = this.imageUrl,
             content = this.content,
-            category = "",
+            category =this.category,
             url = this.url,
         ),
         publishedTime = publishedTime
     )
 }
-
 
 fun NewsItemEntity.toSearchNewsUiState(): SearchItemUiState {
     val publishedTimeString = dateFormat.format(this.publishedTime)

@@ -23,19 +23,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ui.R
 import com.example.ui.theme.NewsHiveTheme
+import com.example.ui.theme.dimens
 
 @Composable
 fun SwipeToSeeMoreIndicator(color: Color, fontStyle: TextStyle) {
+    val dimens = MaterialTheme.dimens
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val position by infiniteTransition.animateFloat(
-        initialValue = -5f,
-        targetValue = 10f,
+        initialValue = -dimens.floatValues.float5,
+        targetValue = dimens.floatValues.float10,
         animationSpec = infiniteRepeatable(tween(1000), repeatMode = RepeatMode.Reverse), label = ""
     )
     Column {
         Text(
             modifier = Modifier
-                .padding(bottom = 16.dp)
+                .padding(bottom = dimens.space16)
                 .align(Alignment.CenterHorizontally),
             text = stringResource(R.string.swipe_to_see_more),
             style = fontStyle,
@@ -43,7 +45,7 @@ fun SwipeToSeeMoreIndicator(color: Color, fontStyle: TextStyle) {
         )
         Icon(
             modifier = Modifier
-                .padding(bottom = 16.dp)
+                .padding(bottom = dimens.space16)
                 .offset(y = position.dp)
                 .align(Alignment.CenterHorizontally),
             painter = painterResource(id = R.drawable.alt_arrow_down),

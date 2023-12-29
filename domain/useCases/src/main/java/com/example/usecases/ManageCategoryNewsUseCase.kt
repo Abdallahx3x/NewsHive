@@ -2,7 +2,7 @@ package com.example.usecases
 
 import javax.inject.Inject
 
-class GetCategoryNewsUseCase @Inject constructor(
+class ManageCategoryNewsUseCase @Inject constructor(
     private val newsHiveRepository: NewsHiveRepository
 ) {
     suspend fun getLastCategoryNews(categoryName: String) = newsHiveRepository

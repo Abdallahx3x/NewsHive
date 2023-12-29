@@ -18,9 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.ui.theme.DarkCard
 import com.example.ui.theme.LightCard
+import com.example.ui.theme.dimens
 import kotlinx.coroutines.delay
 
 @Composable
@@ -30,6 +30,7 @@ fun ActionSnakeBar(
     isVisible: Boolean = false,
 ) {
     val textStyle = MaterialTheme.typography
+    val dimens = MaterialTheme.dimens
     var timeVisible by remember { mutableStateOf(isVisible) }
     LaunchedEffect(isVisible) {
         if (isVisible) {
@@ -43,7 +44,7 @@ fun ActionSnakeBar(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(dimens.space16)
     ) {
         AnimatedVisibility(
             modifier = Modifier
@@ -51,13 +52,13 @@ fun ActionSnakeBar(
                 .align(Alignment.BottomCenter),
             visible = timeVisible
         ) {
-            Snackbar(shape = RoundedCornerShape(12.dp), containerColor = DarkCard) {
+            Snackbar(shape = RoundedCornerShape(dimens.space12), containerColor = DarkCard) {
                 Row(
-                    modifier = Modifier.padding(vertical = 16.dp),
+                    modifier = Modifier.padding(vertical = dimens.space16),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        modifier = Modifier.weight(3f),
+                        modifier = Modifier.weight(dimens.floatValues.float3),
                         text = contentMessage,
                         style = textStyle.bodyMedium,
                         color = LightCard
