@@ -60,6 +60,10 @@ The project is structured using Clean Architecture, separating concerns into lay
 4. Insert the API key in the appropriate configuration file.
 5. Build and run the application on an emulator or physical device.
 
+## Download Latest Release
+
+Download the latest version of the News Hive App from the [Releases Page](https://github.com/Abdallahx3x/NewsHive/releases/tag/v1.0.0).
+
 ## License
 
 This project is open source and released under the [MIT License](LICENSE).
