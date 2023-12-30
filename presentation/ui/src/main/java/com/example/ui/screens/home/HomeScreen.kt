@@ -202,59 +202,11 @@ fun HomeContent(
                     )
                 }
             }
-//            RecommendedNewsSection(
-//                recommendedNews = state.recommendedNewsUiState,
-//                onNewsItemClick = homeInteraction::onClickRecommendedNewsItem
-//            )
             RecommendedNewsSection(
                 onNewsItemClick = homeInteraction::onClickRecommendedNewsItem,
                 onSeeAllClick = homeInteraction::onClickViewAll,
                 recommendedNews = state.recommendedNewsUiState
             )
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(horizontal = dimens.space16)
-//                    .padding(bottom = dimens.space16),
-//                horizontalArrangement = Arrangement.SpaceBetween
-//            ) {
-//                Text(
-//                    text = stringResource(R.string.recommended), color = color.onBackground87,
-//                    style = fontStyle.titleMedium
-//                )
-//                Text(
-//                    modifier = Modifier
-//                        .clip(RoundedCornerShape(dimens.space8))
-//                        .clickable { homeInteraction.onClickViewAll() },
-//                    text = stringResource(R.string.view_all),
-//                    color = color.primary,
-//                    style = fontStyle.titleSmall
-//                )
-//            }
-//            LazyColumn(modifier = Modifier.padding(horizontal = dimens.space16)) {
-//                items(state.recommendedNewsUiState.size) {
-//                    val item = state.recommendedNewsUiState[it]
-//                    Box {
-//                        CircularProgressIndicator(
-//                            modifier = Modifier
-//                                .padding(
-//                                    bottom = dimens.space16,
-//                                    start = dimens.space26
-//                                )
-//                                .size(dimens.space24)
-//                                .align(CenterStart)
-//                        )
-//                        NewsHiveCard(
-//                            modifier = Modifier.padding(bottom = dimens.space16),
-//                            onClick = { homeInteraction.onClickRecommendedNewsItem(item) },
-//                            painter = rememberAsyncImagePainter(item.imageUrl),
-//                            category = item.category,
-//                            title = item.title,
-//                            date = item.publishedAt
-//                        )
-//                    }
-//                }
-//            }
         }
     }
 }
